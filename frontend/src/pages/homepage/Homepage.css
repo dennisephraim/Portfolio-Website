@@ -1,14 +1,15 @@
+.info-home h1{
+    font-size: 2.5vw;
+    resize: both;
+    padding-bottom: 2%;
+}
 .info-home h1 span{
-    font-size: 3.3vw;
+    font-size: 2.5vw;
     resize: both;
     color: #09b850;
     padding-bottom: 2%;
 }
-.info-home h1{
-    font-size: 3.3vw;
-    resize: both;
-    padding-bottom: 2%;
-}
+
 .info-home h3{
     padding-bottom: 2%;  
     font-size: 1.3vw;
@@ -19,13 +20,10 @@
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    
-    padding: 5% 3%;
     transition: all 0.2s ;
     flex-direction: column;
     height: auto;
-    text-align: right;
-    padding-left: 10vw;    
+    text-align: right; 
 }
 .social-link {
     background-color: var(--container-color);
@@ -45,15 +43,15 @@
 }
 .info-home .salute{
     font-style: italic;
-    font-size: 3.2vw;
+    font-size: 2vw;
     font-family: "Lucida Handwriting", cursive;
     display: flex;
     flex-direction: row-reverse;
 }
 .button_class{
     display: flex;
-    justify-content: space-between;
-    margin-right: 5vw;    
+    justify-content: space-between;    
+    column-gap: 2vw;
 }
 .button{
     text-decoration: none;
@@ -78,14 +76,15 @@
 }
 .home-page{
     display: flex;
+    column-gap: 2vw;
     align-items: center;
-    justify-content: center;
-    height: auto;
+    padding-top: 3vw;
+    padding-left: 20vw;
+    padding-right: 20vw;
+    position: relative;
 }
 .home-page img{
-    width: 40vw;
-    padding-left: 10vw;
-    border-radius: 2rem
-    
+    width: 20vw;
+    border-radius: 2rem    
 }
 

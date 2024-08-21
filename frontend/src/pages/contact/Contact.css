@@ -1,11 +1,12 @@
-.contact-section{
-    padding-block: 3vw;
-}
+
 .contact-container{
-    padding-left: 10vw;
+    padding-left: 20vw;
+    padding-right: 20vw;
     display: flex;
+    column-gap: 3vw;
 }
 .title{
+    padding-top: 3vw;
     text-align: center;
     font-size: 2.5vw;
     margin-bottom: 3vw;
@@ -16,14 +17,69 @@
 
 .data {
     max-height: 100vw;
-    max-width:  35vw;
+    max-width:  22vw;
     display: inline-block;
 }
-.contact-info{
-    display: flex;    
+.data h3{
+    font-size: 1.5vw;
+    margin-bottom: 1.2vw;
 }
+.data p{
+    margin-bottom: 1.2vw;
+    font-size: 1vw;
+}
+.contact-info {
+    display: flex; 
+    column-gap: 16px;
+    font-size: 1vw;
+    padding-bottom: 1vw;
+}
+
 .contact-info svg{
     display: flex;
     align-self: center;
+    font-size: 1.8vw;
     
+    color: #09b850;
+}
+.person-info{
+    display: flex;
+    column-gap: 1vw;  
+    padding-bottom: 1.5vw; 
+    text-align: left;
+    background-color: var(--container-color);
+}
+.person-info input{
+    border-radius: 1vw;
+    border: 1px solid #09b850;
+    background-color: var(--container-color);
+    width: 100%;
+    padding: 12px 24px;
+    transition: all .3s ease;  
+    resize: none;  
+    outline: none;
+    color: var(--container-color);
+}
+.message{
+    padding-bottom: 1.5vw; 
+}
+.message textarea{
+    height: 160px;
+    width: 100%;
+    border: 1px solid #09b850;
+    border-radius: 1vw;
+    padding: 12px 24px;   
+    background-color: var(--container-color);    
+    resize: none;
+    box-sizing: border-box;
+    outline: none;
+    color: var(--container-color);
+}
+.form-division button{
+    background-color: var(--container-color);
+    color: var(--container-color);
+    padding: 12px 24px;   
+    border-radius: 1vw;
+    cursor: pointer;
+    border: 1px solid #09b850;
 }
