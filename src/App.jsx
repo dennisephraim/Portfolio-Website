@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <div className={`mycontainer ${theme}`}>
-      <Router>
+      <Router basename="/portfolio-website">
         
         <Navbar theme={theme} setTheme={setTheme}/>
         
