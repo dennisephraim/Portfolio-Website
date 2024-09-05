@@ -80,7 +80,7 @@
     grid-template-columns: repeat(4, 1fr);
     justify-items: center;
     row-gap: 48px;
-    padding-bottom: 30px;
+    padding-bottom: 40px;
 }
 .title-section{
     text-align: center;

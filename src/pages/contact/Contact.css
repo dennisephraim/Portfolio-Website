@@ -92,7 +92,7 @@
         display: grid;
         grid-template-columns: 1fr;
         justify-items: center;
-        padding-bottom: 20px;
+        padding-bottom: 40px;
     }
     .person-info{
         display: grid;

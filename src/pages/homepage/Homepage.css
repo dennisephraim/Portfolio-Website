@@ -90,13 +90,24 @@
         justify-items: center;
         padding-top: 100px;
         height: 100%;
-        padding-bottom: 30px;
+        padding-bottom: 40px;
     }
     .info-home{
         grid-template-columns: 1fr;
         justify-items: center;
         align-items: center;
         padding-top: 20px;
+    }
+    .info-home h1{
+        text-align: center;
+    }
+}
+@media (max-width: 500px) {
+    .home-page img{
+        max-width: 280px;
+    }
+    .info-home h1{
+        text-align: center;
     }
 }
 
