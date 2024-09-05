@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     <div className={`mycontainer ${theme}`}>
-      <Router basename="/portfolio-website">
+      <Router basename={import.meta.env.BASE_URL}>
         
         <Navbar theme={theme} setTheme={setTheme}/>
         
