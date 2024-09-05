@@ -11,7 +11,7 @@ const Navbar = ({theme, setTheme}) => {
   }
 
   return (
-    <div className='navbar'>
+    <div className='mynavbar'>
       
       <nav>
         <li><NavLink className='mylink' to="/">HOME</NavLink></li>

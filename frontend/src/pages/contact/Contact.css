@@ -1,56 +1,53 @@
-
 .contact-container{
-    padding-left: 20vw;
-    padding-right: 20vw;
     display: flex;
-    column-gap: 3vw;
+    margin-inline: auto;
+    column-gap: 50px;
+    max-width: 1000px;
+}
+.contact-section{
+    padding-top: 7vh;
 }
 .title{
-    padding-top: 3vw;
     text-align: center;
-    font-size: 2.5vw;
-    margin-bottom: 3vw;
+    font-size: 40px;
+    margin-bottom: 50px;
 }
 .title span{
     color: #09b850;
 }
-
 .data {
-    max-height: 100vw;
-    max-width:  22vw;
+    max-width:  380px;
     display: inline-block;
 }
 .data h3{
-    font-size: 1.5vw;
-    margin-bottom: 1.2vw;
+    font-size: 30px;
+    margin-bottom: 20px;
 }
 .data p{
-    margin-bottom: 1.2vw;
-    font-size: 1vw;
+    margin-bottom: 20px;
+    font-size: 17px;
 }
 .contact-info {
     display: flex; 
     column-gap: 16px;
-    font-size: 1vw;
-    padding-bottom: 1vw;
+    font-size: 17px;
+    padding-bottom: 16px;
 }
-
 .contact-info svg{
     display: flex;
     align-self: center;
-    font-size: 1.8vw;
-    
+    font-size: 40px;
     color: #09b850;
 }
 .person-info{
     display: flex;
-    column-gap: 1vw;  
-    padding-bottom: 1.5vw; 
+    column-gap: 10px;  
+    padding-bottom: 20px; 
     text-align: left;
     background-color: var(--container-color);
 }
 .person-info input{
-    border-radius: 1vw;
+    border-radius: 15px;
     border: 1px solid #09b850;
     background-color: var(--container-color);
     width: 100%;
@@ -61,13 +58,13 @@
     color: var(--container-color);
 }
 .message{
-    padding-bottom: 1.5vw; 
+    padding-bottom: 15px; 
 }
 .message textarea{
     height: 160px;
     width: 100%;
     border: 1px solid #09b850;
-    border-radius: 1vw;
+    border-radius: 15px;
     padding: 12px 24px;   
     background-color: var(--container-color);    
     resize: none;
@@ -79,7 +76,35 @@
     background-color: var(--container-color);
     color: var(--container-color);
     padding: 12px 24px;   
-    border-radius: 1vw;
+    border-radius: 15px;
     cursor: pointer;
     border: 1px solid #09b850;
+}
+.form-division button:hover{
+    background-color: #09b850;
+    transition: 0.5s ease-in-out;
+}
+.info-description{
+    font-size: 17px;
+}
+@media (max-width: 850px) {
+    .contact-container{
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        padding-bottom: 20px;
+    }
+    .person-info{
+        display: grid;
+        row-gap: 10px;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        padding-top: 30px;
+    }
+    .data{
+        max-width: 300px;
+    }
+    .contact-section{
+        height: 100%;
+    }
 }

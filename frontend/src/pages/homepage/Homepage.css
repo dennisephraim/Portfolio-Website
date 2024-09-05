@@ -1,29 +1,25 @@
 .info-home h1{
-    font-size: 2.5vw;
-    resize: both;
+    font-size: 40px;
     padding-bottom: 2%;
 }
 .info-home h1 span{
-    font-size: 2.5vw;
-    resize: both;
+    font-size: 40px;
     color: #09b850;
     padding-bottom: 2%;
 }
-
-.info-home h3{
-    padding-bottom: 2%;  
-    font-size: 1.3vw;
-    font-weight: 100;
+.info-home p{
+    padding-bottom: 2%; 
+    font-size: 18px;
 }
 .info-home{
     width: 100%;
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: space-between;
     transition: all 0.2s ;
     flex-direction: column;
     height: auto;
-    text-align: right; 
+    text-align: left; 
 }
 .social-link {
     background-color: var(--container-color);
@@ -39,52 +35,68 @@
     text-decoration: none;
     display:flex;
     column-gap: 16px;
-    padding-bottom: 4vw;
+    padding-bottom: 30px;
 }
 .info-home .salute{
     font-style: italic;
-    font-size: 2vw;
+    font-size: 40px;
     font-family: "Lucida Handwriting", cursive;
-    display: flex;
-    flex-direction: row-reverse;
 }
 .button_class{
     display: flex;
     justify-content: space-between;    
-    column-gap: 2vw;
+    column-gap: 100px;
+    flex-wrap: wrap;
 }
 .button{
     text-decoration: none;
-    margin: 0.5vw;
     color: var(--title-color);
-    background-color: transparent;
-    padding: 0.75vw;
-    font-size: 1vw;
+    background-color: var(--container-color);
+    padding: 12px;
+    font-size: 14px;
     transition: all 0.02s ease-in-out;   
     display: inline-block;
     border: 2px solid #09b850;
     cursor: pointer;
     border-radius: 50px;      
-    padding-right: 30px;
+    padding-right: 15px;
 }
 .button:hover{
     background-color: #09b850;
     transition: 0.5s ease-in-out;
 }
 .button span{
-    padding-right: 1vw;
+    padding-right: 10px
 }
 .home-page{
     display: flex;
-    column-gap: 2vw;
+    grid-template-columns: repeat(2, 1fr);
     align-items: center;
-    padding-top: 3vw;
-    padding-left: 20vw;
-    padding-right: 20vw;
-    position: relative;
+    column-gap: 50px;
+    max-width: 1140px;
+    margin-inline: auto;
+    justify-content: center;
+    padding-bottom: 50px;
+    padding-top: 7vh;
 }
 .home-page img{
-    width: 20vw;
-    border-radius: 2rem    
+    width: 480px;
+    border-radius: 20px   
+}
+@media (max-width: 1055px) {
+    .home-page{
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        padding-top: 100px;
+        height: 100%;
+        padding-bottom: 30px;
+    }
+    .info-home{
+        grid-template-columns: 1fr;
+        justify-items: center;
+        align-items: center;
+        padding-top: 20px;
+    }
 }
 

@@ -1,17 +1,102 @@
 .about-container{
-    margin-left: 20vw;
-    margin-right: 20vw;
-    margin-top: 3vw;
+    margin-top: 7vh;
+    max-width: 1140px;
+    margin-inline: auto;
+    padding-inline: 15px;
+}
+.about{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: flex-start;
+    column-gap: 20px;
+}
+.details{
+    row-gap: 20px;
+    display: grid;
+    gap: 30px;
+    list-style: none;
+    align-items: flex-start;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 30px;
+}
+.resume-title{
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+.about-experience{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: flex-start;
+    gap: 30px;
+}
+.stats-box{
+    border: 1px solid rgb(230, 220, 220);
+    padding: 20px 70px 30px 25px;
+    border-radius: 5px;
+}
+.dark .stats-box{
+    border-color: rgb(42, 41, 41);
+}
+.stats-title{
+    line-height: 1.6;
+    padding-left: 45px;
+    position: relative;
+}
+.stats-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 25%;
+    width: 30px;
+    height: 1px;
+    background-color: gray;
+}
+.separator{
+    border-top: 1px solid rgb(230, 220, 220);;
+    max-width: 40%;
+    margin: 72px auto 56px;
+}
+.dark .separator{
+    border-color: rgb(42, 41, 41);
+}
+.resume{
+    display: grid;
+    column-gap: 40px;
+    grid-template-columns: repeat(2, 1fr);
+}
+.skill-box-img{
+    width: 60px;
     align-items: center;
 }
-.my-title{
-    text-align: center;
-    font-size: 2.5vw;
-}
-.my-title span{
-    color: #09b850;
-}
-.my-headers{
+.skill-box{
     display: flex;
-    column-gap: 100%;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+}
+.skills-container-grid{
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    row-gap: 48px;
+    padding-bottom: 30px;
+}
+.title-section{
+    text-align: center;
+    margin-bottom: 60px;
+    font-size: 30px;
+}
+@media (max-width: 768px) {
+    .about, .details, .about-experience, .resume, .homepage{
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+    .about-education{
+        padding-bottom: 30px;
+        align-items: left;
+    }
+    .skills-container-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

@@ -12,11 +12,12 @@ const Homepage = () => {
       <div className='info-home'>
         <h1 className='salute'>HI</h1>
         <h1>I AM <span>EPHRAIM AKAI-NETTEY</span></h1>
-        <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-          incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure 
-          dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h3>
+        <p>
+          I'm always eager to take on new challenges, whether it's developing a user-friendly frontend, automating complex tasks, or analyzing data to uncover insights. 
+          My work reflects a commitment to blending creativity with technical expertise to solve real-world problems. 
+          Let's connect and explore how we can create something extraordinary together!
+        </p>
+        
         <div className="socials">
           
             <a href="https://www.linkedin.com/in/ephraim-akai-nettey-28094519a/" className="social-link" title="LinkedIn" target="_blank">
@@ -50,6 +51,7 @@ const Homepage = () => {
           </a>
         </div>
       </div>
+      
     </div>
   );
 };

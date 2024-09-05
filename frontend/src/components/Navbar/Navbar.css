@@ -1,18 +1,17 @@
-.navbar{
+.mynavbar{
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 3%;
   transition: 0.5s;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  overflow: hidden;
 }
 
-nav{
-  flex: 1;
-  list-style: none;
-  text-align: left;
-  
-}
 nav li{
   text-decoration: none;
   display: inline-block;
@@ -21,13 +20,12 @@ nav li{
   cursor: pointer
 }
 .toggle-icon{
-  width: 2.5vw;
+  width: 2.5rem;
   cursor: pointer;
-  margin-left: 40;
 }
-.dark .navbar{
-  /* background: #000; */
+.dark .mynavbar{
   color: #fff;
+  background-color: #161618;
 }
 nav a.active{
   color: #09b850;
@@ -41,12 +39,10 @@ nav a.active:hover{
   color: #000;
   padding: 0.5rem 1rem;
   border: none;
-  background-color: transparent;
   font-family: "Roboto Condensed", sans-serif;
-  font-size: 1vw;
+  font-size: 1.2rem;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  
 }
 .mylink:hover{
     color: #71c592db;
@@ -57,11 +53,10 @@ nav a.active:hover{
 }
 .dark a.active{
   color: #09b850;
-  text-decoration: overline;
 }
 .dark a.active:hover{
   color: #09b850;
-  
+ 
 }
 .dark .mylink:hover{
   color: #71c592db;

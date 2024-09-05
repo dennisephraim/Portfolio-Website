@@ -1,0 +1,23 @@
+.portfolio-section{
+    padding-top: 7vh;
+    display: grid;
+    justify-content: center;
+    text-align: center;
+}
+.portfolio-container{
+    display: flex;
+    column-gap: 100px;
+    row-gap: 100px;
+    width: 100%;
+    align-items: center;
+}
+
+@media (max-width: 1460px) {
+    .portfolio-container{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
+        padding-bottom: 20px;
+    }
+
+}

@@ -1,0 +1,60 @@
+.resume-item{
+    padding: 0 0 20px 20px;
+    margin-top: -2px;
+    border-left: 2px solid #09b850;
+    position: relative;
+    width: 100;
+}
+.resume-item::before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50px;
+    left: -9px;
+    top: 0;
+    background: white;
+    border: 2px solid #09b850;
+    transition:0.5s;
+}
+.dark .resume-item::before{
+    background-color: #161618;
+    transition:0.5s;
+}
+.resume-item h4{ 
+    font-size: var(--large-font-size);
+    font-weight: var(--weight--500);
+    margin-block: 20px 10px;
+    color: var(--first-color);
+}
+.resume-item h4 span{ 
+    color: #09b850;
+}
+.resume-item:last-child{
+    padding-bottom: 0px;
+}
+.dark .resume-item h6{
+    background-color: rgb(36, 37, 36);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 13px; 
+    transition: 0.2s;
+}
+.resume-item h6{
+    background-color: rgb(227, 236, 227);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    transition: 0.2s;
+}
+.resume-item h5{
+    font-size: 15px;
+    color: #09b850;
+}
+.resume-item ul{
+    list-style: none;
+    padding-left: 0%;
+}
+
+
+
