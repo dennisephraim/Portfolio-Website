@@ -104,7 +104,7 @@
 }
 @media (max-width: 500px) {
     .home-page img{
-        max-width: 280px;
+        max-width: 300px;
     }
     .info-home h1{
         text-align: center;
