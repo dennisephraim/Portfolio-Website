@@ -8,7 +8,6 @@ import Navbar from './components/Navbar/Navbar'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
-
 const App = () => {
 
   const current_theme = localStorage.getItem('current_theme');
@@ -27,8 +26,7 @@ const App = () => {
 
   return (
     <div className={`mycontainer ${theme}`}>
-      <Router basename={import.meta.env.BASE_URL}>
-        
+      <Router>
         <Navbar theme={theme} setTheme={setTheme}/>
         
         <Routes>      

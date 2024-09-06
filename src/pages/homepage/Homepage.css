@@ -45,7 +45,8 @@
 .button_class{
     display: flex;
     justify-content: space-between;    
-    column-gap: 100px;
+    column-gap: 80px;
+    row-gap: 20px;
     flex-wrap: wrap;
 }
 .button{
