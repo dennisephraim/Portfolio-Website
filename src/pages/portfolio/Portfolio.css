@@ -6,13 +6,13 @@
 }
 .portfolio-container{
     display: flex;
-    column-gap: 100px;
+    column-gap: 50px;
     row-gap: 100px;
     width: 100%;
     align-items: center;
 }
 
-@media (max-width: 1460px) {
+@media (max-width: 1300px) {
     .portfolio-container{
         display: grid;
         grid-template-columns: repeat(2, 1fr);

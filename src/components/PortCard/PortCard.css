@@ -17,3 +17,15 @@
 .dark .port-card{
     background-color: rgb(36, 37, 36);
 }
+.card-img{
+    height: 200px;
+    padding-bottom: 20px;
+}
+.htag {
+    text-decoration: none;
+    color: black;
+    transition: ease-in-out 0.5s;
+}
+.dark .htag{
+    color: white;
+}
