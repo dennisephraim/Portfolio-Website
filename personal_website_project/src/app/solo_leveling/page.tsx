@@ -14,7 +14,6 @@ const temp_task = [
 const userEmail = "akainetteyephraim1234@gmail.com"
 const userPassword = "Adgjmptw!23"
 
-
 export default async function soloLeveling() {
     const userCred = await signInWithEmailAndPassword(auth, userEmail, userPassword)
     const user = userCred.user
