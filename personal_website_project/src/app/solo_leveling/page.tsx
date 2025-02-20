@@ -1,7 +1,7 @@
 import Goal from "@/components/goal"
 import Status from "@/components/status"
 import AddGoal from "@/components/addGoal"
-import { signInWithEmailAndPassword, User } from "firebase/auth"
+import { signInWithEmailAndPassword} from "firebase/auth"
 import { auth } from "../../firebase/config"
 
 const temp_task = [
