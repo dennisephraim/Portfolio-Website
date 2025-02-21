@@ -14,7 +14,8 @@ const temp_task = [
 export default function soloLeveling() {
     const {userId, loading, error} = UseSession()
     if (loading) return <p>Loading Session</p>
-    if (error) return <p>Error: {error}</p>
+    if (error) return {notFound: true,}
+  
     
     return (
         <div className="grid grid-cols-2">
