@@ -11,7 +11,7 @@ const temp_task = [
     {name: 'leetcode'},
 ]
 
-export default function soloLeveling() {
+export default function SoloLeveling() {
     const {userId, loading, error} = useSession()
     if (loading) return <p>Loading Session</p>
     if (error) return <p>Error: {error}</p>
