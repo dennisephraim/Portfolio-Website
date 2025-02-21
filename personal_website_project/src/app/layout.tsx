@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "../components/navbar"
 import Navbar from "@/components/navbar";
+import { SessionProvider } from "@/context/context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,7 +32,9 @@ export default function RootLayout({
       >
         <Navbar/>
         <div className="w-[65%] mx-auto">
-          {children}
+          <SessionProvider>
+            {children}
+          </SessionProvider>
         </div>        
       </body>
     </html>
