@@ -3,7 +3,7 @@
 import Goal from "@/components/goal"
 import Status from "@/components/status"
 import AddGoal from "@/components/addGoal"
-import { useSession } from "@/context/context"
+import { UseSession } from "@/context/context"
 
 const temp_task = [
     {name: 'pushups'},
@@ -12,7 +12,7 @@ const temp_task = [
 ]
 
 export default function soloLeveling() {
-    const {userId, loading, error} = useSession()
+    const {userId, loading, error} = UseSession()
     if (loading) return <p>Loading Session</p>
     if (error) return <p>Error: {error}</p>
     
