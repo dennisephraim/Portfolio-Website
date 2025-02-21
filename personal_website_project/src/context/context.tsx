@@ -79,9 +79,12 @@ export function SessionProvider({ children }: SessionProviderProps) {
                     // This might happen on the first ever visit
                     try {
                         await signInAnonymously(auth);
-                    } catch (err: any) {
-                        setError(err.message);
-                        setLoading(false);
+                    } catch (err: unknown) {
+                        if (err instanceof Error) {
+                            setError(err.message);
+                        } else {
+                            setError(String(err));
+                        }
                     }
                 }
             });
@@ -106,9 +109,12 @@ export function SessionProvider({ children }: SessionProviderProps) {
                     setError(data.error || "Unknown error checking session");
                     setLoading(false);
                 }
-            } catch (err: any) {
-                setError(err.message || String(err));
-                setLoading(false);
+            } catch (err: unknown) {
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError(String(err));
+                }
             }
         }
 
