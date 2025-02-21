@@ -137,6 +137,6 @@ export function SessionProvider({ children }: SessionProviderProps) {
     );
 }
 
-export function UseSession() {
+export function useSession() {
     return useContext(SessionContext);
 }
