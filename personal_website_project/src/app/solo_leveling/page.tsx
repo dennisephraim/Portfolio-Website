@@ -22,6 +22,7 @@ export default function SoloLeveling() {
             <Goal questTitle={"Lock-In"} tasks={temp_task}/>
             <AddGoal/>
             <p>Your anonymous UID: {userId}</p>
+            <p>Test</p>
         </div>
     )
 }
