@@ -36,92 +36,28 @@ export function SessionProvider({ children }: SessionProviderProps) {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        let unsubscribeAuthState: (() => void) | null = null;
+        const unsubscribeAuthState = onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // Get the ID token for this anonymous user
+                const token = await user.getIdToken(/* forceRefresh= */ true);
+                sessionStorage.setItem("myIdToken", token);
 
-        // Helper function to sign in anonymously if needed
-        async function attemptAnonymousSignIn() {
-            unsubscribeAuthState = onAuthStateChanged(auth, async (user) => {
-                if (user) {
-                    // We have a user object from Firebase
-                    unsubscribeAuthState?.();
-
-                    // Get the ID token for this anonymous user
-                    const token = await user.getIdToken(/* forceRefresh= */ true);
-
-                    // Exchange the ID token for a session cookie
-                    const resp = await fetch("https://sessionapp-auu3gfb5pa-uc.a.run.app/sessionCreation", {
-                        method: "POST",
-                        credentials: "include", // so we send/receive cookies
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ idToken: token }),
-                    });
-                    if (!resp.ok) {
-                        const data = await resp.json().catch(() => ({}));
-                        setError(data.error || "Failed to create session cookie");
-                        setLoading(false);
-                        return;
-                    }
-
-                    // Now that the cookie is set, let's confirm by calling /profile again
-                    const profileResp = await fetch("https://sessionapp-auu3gfb5pa-uc.a.run.app/profile", {
-                        credentials: "include",
-                    });
-                    if (!profileResp.ok) {
-                        setError("Failed to verify session cookie");
-                        setLoading(false);
-                        return;
-                    }
-                    const profileData = await profileResp.json();
-                    setUserId(profileData.userId || null);
-                    setLoading(false);
-                } else {
-                    // If we have no Firebase user, sign in anonymously
-                    // This might happen on the first ever visit
-                    try {
-                        await signInAnonymously(auth);
-                    } catch (err: unknown) {
-                        if (err instanceof Error) {
-                            setError(err.message);
-                        } else {
-                            setError(String(err));
-                        }
-                    }
-                }
-            });
-        }
-
-        async function checkExistingSessionCookie() {
-            try {
-                // 1) Check if there's already a valid session cookie
-                const resp = await fetch("https://sessionapp-auu3gfb5pa-uc.a.run.app/profile", { credentials: "include" });
-
-                if (resp.ok) {
-                    // Already have a valid session
-                    const data = await resp.json();
-                    setUserId(data.userId || null);
-                    setLoading(false);
-                    } else if (resp.status === 401) {
-                    // No valid session => sign in anonymously
-                    await attemptAnonymousSignIn();
+                setUserId(user.uid || null);
+                setLoading(false);
+            } else {
+                try {
+                    await signInAnonymously(auth);
+                } catch (err: unknown) {
+                    if (err instanceof Error) {
+                        setError(err.message);
                     } else {
-                    // Some other error
-                    const data = await resp.json().catch(() => ({}));
-                    setError(data.error || "Unknown error checking session");
-                    setLoading(false);
-                }
-            } catch (err: unknown) {
-                if (err instanceof Error) {
-                    setError(err.message);
-                } else {
-                    setError(String(err));
+                        setError(String(err));
+                    }
                 }
             }
-        }
+        });
 
-        checkExistingSessionCookie();
-        return () => {
-            if (unsubscribeAuthState) unsubscribeAuthState();
-        };
+        return () => unsubscribeAuthState()
     }, []);
 
     const contextValue: SessionContextValue = {

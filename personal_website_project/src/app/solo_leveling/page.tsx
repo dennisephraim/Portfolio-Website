@@ -15,7 +15,7 @@ export default function SoloLeveling() {
     const {userId, loading, error} = useSession()
     if (loading) return <p>Loading Session</p>
     if (error) return <p>Error: {error}</p>
-    
+
     return (
         <div className="grid grid-cols-2">
             <Status />
