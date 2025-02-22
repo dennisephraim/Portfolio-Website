@@ -21,7 +21,7 @@ export default function Projects() {
             setDat(data)
             
         }
-        () => fetchProfile()
+        fetchProfile()
     }, [])
     console.log("Profile data:", dat);
     return <div>All Projects {}</div>
