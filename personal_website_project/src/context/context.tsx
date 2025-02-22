@@ -9,7 +9,7 @@ import React, {
     ReactNode,
 } from "react";
 import { onAuthStateChanged, signInAnonymously } from "firebase/auth";
-import {auth} from "../firebase/config"
+import { auth } from "../firebase/config"
 
 /**
  * 2) Define the shape of the session context
