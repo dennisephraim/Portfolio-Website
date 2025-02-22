@@ -16,7 +16,7 @@
       ],
       "rewrites": [
         { "source": "ephraimdennis.com/profile", "function": "sessionApp" },
-        { "source": "ephraimdennis.com/sessionLogin", "function": "sessionApp" }
+        { "source": "ephraimdennis.com/sessionCreation", "function": "sessionApp" }
       ]      
     }
   ]
