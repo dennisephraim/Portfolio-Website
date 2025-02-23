@@ -56,7 +56,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
             }
         });
 
-        () => unsubscribeAuthState()
+        return () => unsubscribeAuthState()
     }, []);
 
     useEffect(() => {
