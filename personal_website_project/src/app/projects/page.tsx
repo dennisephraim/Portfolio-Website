@@ -8,6 +8,7 @@ export default function Projects() {
     useEffect(() => {
         const fetchProfile = async () => {
             const token = sessionStorage.getItem("myIdToken")
+            
             const res = await fetch("https://getprofile-auu3gfb5pa-uc.a.run.app/getProfile", {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}` },
