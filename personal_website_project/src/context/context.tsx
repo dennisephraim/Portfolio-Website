@@ -8,20 +8,20 @@ import React, {
     useContext,
     ReactNode,
 } from "react";
-import { onAuthStateChanged, signInAnonymously } from "firebase/auth";
+import { onAuthStateChanged, signInAnonymously, onIdTokenChanged, User } from "firebase/auth";
 import { auth } from "../firebase/config"
 
 /**
  * 2) Define the shape of the session context
  */
 type SessionContextValue = {
-    userId: string | null;  // The anonymous user's UID (or null if not set)
+    user: User | null;  // The anonymous user's UID (or null if not set)
     loading: boolean;       // Whether we are still loading/checking
     error: string | null;   // Any error message encountered
 };
 
 const SessionContext = createContext<SessionContextValue>({
-    userId: null,
+    user: null,
     loading: true,
     error: null,
 });
@@ -31,18 +31,18 @@ interface SessionProviderProps {
 }
 
 export function SessionProvider({ children }: SessionProviderProps) {
-    const [userId, setUserId] = useState<string | null>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [token, setToken] = useState<string | null>(null);
 
     useEffect(() => {
-        const unsubscribeAuthState = onAuthStateChanged(auth, async (user) => {
+        const unsubscribeAuthState = onIdTokenChanged(auth, async (user) => {
             if (user) {
-                // Get the ID token for this anonymous user
-                const token = await user.getIdToken(/* forceRefresh= */ true);
+                const token = await user.getIdToken( true);
                 sessionStorage.setItem("myIdToken", token);
 
-                setUserId(user.uid || null);
+                setUser(user);
                 setLoading(false);
             } else {
                 try {
@@ -61,7 +61,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
     }, []);
 
     const contextValue: SessionContextValue = {
-        userId,
+        user,
         loading,
         error,
     };

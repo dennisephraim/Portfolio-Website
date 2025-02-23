@@ -10,63 +10,39 @@
 import {onRequest} from "firebase-functions/v2/https";
 import admin from "firebase-admin";
 import cors from "cors";
-import express, {CookieOptions} from "express";
-import cookieParser from "cookie-parser";
 
 admin.initializeApp();
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
-const app = express();
-app.use(cookieParser());
-app.use(cors({
-  origin: true,
-  methods: ["GET", "POST"],
-  credentials: true,
-}));
+const corsHandler = cors({origin: true});
 
-app.post("/sessionCreation", async (req, res) => {
-  try {
-    const token = req.body.idToken;
-    if (!token) {
-      return res.status(400).json({error: "No token provided"});
+export const getProfile = onRequest(async (req, res) => {
+  return corsHandler(req, res, async () => {
+    try {
+      // 1. Read the Authorization header
+      const authHeader = req.headers.authorization || "";
+      if (!authHeader.startsWith("Bearer ")) {
+        return res.status(401).json({error: "No token provided"});
+      }
+
+      // 2. Extract the ID token
+      const idToken = authHeader.split("Bearer ")[1];
+
+      // 3. Verify the token with Firebase Admin
+      const decoded = await admin.auth().verifyIdToken(idToken);
+      const userId = decoded.uid;
+      const signInProvider = decoded.firebase?.sign_in_provider;
+
+      // Return user info or protected data
+      return res.json({
+        message: "Profile data here",
+        userId,
+        signInProvider,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(403).json({error: "Invalid or expired token"});
     }
-    const expiresIn = 5 * 24 * 60 * 60 * 1000;
-    const sessionCookie = await admin.auth().createSessionCookie(
-      token,
-      {expiresIn}
-    );
-    const options = {
-      httpOnly: true,
-      secure: true,
-      maxAge: expiresIn,
-      sameSite: "none" as CookieOptions["sameSite"],
-    };
-    res.cookie("session", sessionCookie, options);
-    return res.json({message: "Session cookie set!"});
-  } catch (error) {
-    console.error(error);
-    return res.status(401).json(
-      {error: "Unauthorized"}
-    );
-  }
+  });
 });
 
-app.get("/profile", async (req, res) => {
-  try {
-    const sessionCookie = req.cookies.session || "";
-    const decodedClaims = await admin.auth().verifySessionCookie(
-      sessionCookie, true
-    );
-
-    return res.json({
-      message: "Profile data here",
-      userId: decodedClaims.uid,
-      sign_in_provider: decodedClaims.firebase?.sign_in_provider,
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(401).json({error: "Invalid or expired session cookie"});
-  }
-});
-
-export const sessionApp = onRequest(app);
