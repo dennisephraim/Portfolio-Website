@@ -8,7 +8,7 @@ import React, {
     useContext,
     ReactNode,
 } from "react";
-import { onAuthStateChanged, signInAnonymously, onIdTokenChanged, User } from "firebase/auth";
+import { signInAnonymously, onIdTokenChanged, User } from "firebase/auth";
 import { auth } from "../firebase/config"
 
 /**
@@ -34,7 +34,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [token, setToken] = useState<string | null>(null);
+    // const [token, setToken] = useState<string | null>(null);
 
     useEffect(() => {
         const unsubscribeAuthState = onIdTokenChanged(auth, async (user) => {
