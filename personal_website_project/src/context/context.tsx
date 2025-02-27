@@ -11,13 +11,10 @@ import React, {
 import { signInAnonymously, onIdTokenChanged } from "firebase/auth";
 import { auth } from "../firebase/config"
 
-/**
- * 2) Define the shape of the session context
- */
 type SessionContextValue = {
-    userId: string | null;  // The anonymous user's UID (or null if not set)
-    loading: boolean;       // Whether we are still loading/checking
-    error: string | null;   // Any error message encountered
+    userId: string | null;
+    loading: boolean;
+    error: string | null;
 };
 
 const SessionContext = createContext<SessionContextValue>({
@@ -67,8 +64,6 @@ export function SessionProvider({ children }: SessionProviderProps) {
         const handle = setInterval(async () => {
             const user = auth.currentUser;
             if (user) {
-              //  console.log("Auth Context, setInterval invoked, getIdToken o user performed");
-                //true - force refresh
                 const newToken = await user.getIdToken(true);
                 sessionStorage.setItem("myIdToken", newToken)
                 console.log(user);
