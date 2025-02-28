@@ -8,7 +8,7 @@ import React, {
     useContext,
     ReactNode,
 } from "react";
-import { signInAnonymously, onIdTokenChanged } from "firebase/auth";
+import { signInAnonymously, onIdTokenChanged, setPersistence, browserSessionPersistence } from "firebase/auth";
 import { auth } from "../firebase/config"
 
 type SessionContextValue = {
@@ -33,44 +33,40 @@ export function SessionProvider({ children }: SessionProviderProps) {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        console.log("onfirstLogin")
-        const unsubscribeAuthState = onIdTokenChanged(auth, async (user) => {
-            if (user) {
-                const token = await user.getIdToken(true);
-                sessionStorage.setItem("myIdToken", token);
-                setUser(user.uid);
-                setLoading(false);
-            } else {
-                try {
-                    await signInAnonymously(auth);
-                } catch (err: unknown) {
-                    if (err instanceof Error) {
-                        setError(err.message);
-                    } else {
-                        setError(String(err));
+        setPersistence(auth, browserSessionPersistence)
+        .then(() => {
+            const unsubscribeAuthState = onIdTokenChanged(auth, async (user) => {
+                if (user) {
+                    try {
+                        const token = await user.getIdToken(false);
+                        sessionStorage.setItem("myIdToken", token);
+                        setUser(user.uid);
+                        setLoading(false);
+                    } catch (err) {
+                        console.error("Error getting ID token:", err);
+                        setError((err as Error).message || String(err));
+                    }
+                } else {
+                    try {
+                        await signInAnonymously(auth);
+                    } catch (err: unknown) {
+                        console.error("Error signing in anonymously:", err);
+                        if (err instanceof Error) {
+                            setError(err.message);
+                        } else {
+                            setError(String(err));
+                        }
                     }
                 }
-            }
+            });
+
+            return () => unsubscribeAuthState();
+        })
+        .catch((persistenceError) => {
+            console.error("Error setting persistence:", persistenceError);
+            setError((persistenceError as Error).message || String(persistenceError));
         });
-
-        return () => unsubscribeAuthState()
     }, []);
-
-    useEffect(() => {
-        const minutes=4;
-        const interval=minutes * 60 * 10000;
-        console.log("authcontext")
-        
-        const handle = setInterval(async () => {
-            const user = auth.currentUser;
-            if (user) {
-                const newToken = await user.getIdToken(true);
-                sessionStorage.setItem("myIdToken", newToken)
-                console.log(user);
-            }
-        }, interval);
-        return () => clearInterval(handle);
-    }, [])
 
     const contextValue: SessionContextValue = {
         userId,
