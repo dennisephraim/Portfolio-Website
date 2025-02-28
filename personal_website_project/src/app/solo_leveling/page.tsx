@@ -12,7 +12,7 @@ const temp_task = [
 ]
 
 export default function SoloLeveling() {
-    const {userId, loading, error} = useSession()
+    const {userId, role, loading, error} = useSession()
     if (loading) return <p>Loading Session</p>
     if (error) return <p>Error: {error}</p>
 
@@ -21,7 +21,7 @@ export default function SoloLeveling() {
             <Status />
             <Goal questTitle={"Lock-In"} tasks={temp_task}/>
             <AddGoal/>
-            <p>Your anonymous UID: {userId}</p>
+            <p>Your anonymous UID: {role}</p>
             <p>Test</p>
         </div>
     )

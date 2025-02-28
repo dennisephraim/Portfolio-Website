@@ -8,17 +8,19 @@ import React, {
     useContext,
     ReactNode,
 } from "react";
-import { signInAnonymously, onIdTokenChanged, setPersistence, browserSessionPersistence } from "firebase/auth";
+import { signInAnonymously, onIdTokenChanged } from "firebase/auth";
 import { auth } from "../firebase/config"
 
 type SessionContextValue = {
     userId: string | null;
+    role: string | null;
     loading: boolean;
     error: string | null;
 };
 
 const SessionContext = createContext<SessionContextValue>({
     userId: null,
+    role: null,
     loading: true,
     error: null,
 });
@@ -29,47 +31,92 @@ interface SessionProviderProps {
 
 export function SessionProvider({ children }: SessionProviderProps) {
     const [userId, setUser] = useState<string | null>(null);
+    const [role, setRole] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        setPersistence(auth, browserSessionPersistence)
-        .then(() => {
-            const unsubscribeAuthState = onIdTokenChanged(auth, async (user) => {
-                if (user) {
-                    try {
-                        const token = await user.getIdToken(false);
-                        sessionStorage.setItem("myIdToken", token);
-                        setUser(user.uid);
-                        setLoading(false);
-                    } catch (err) {
-                        console.error("Error getting ID token:", err);
-                        setError((err as Error).message || String(err));
+        // console.log("onfirstLogin")
+        const unsubscribeAuthState = onIdTokenChanged(auth, async (user) => {
+            if (user) {
+                const token = await user.getIdToken(true);
+                sessionStorage.setItem("myIdToken", token);
+                setUser(user.uid);
+                setLoading(false);
+
+                // fetch user's data
+                try {
+                    const res = await fetch("https://getprofile-auu3gfb5pa-uc.a.run.app/getProfile", {
+                        method: "GET",
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                  
+                    if (!res.ok) {
+                        throw new Error(`Failed to fetch: ${res.statusText}`);
                     }
-                } else {
+                  
+                    const data = await res.json();
+                    setRole(data.role)  
+                } catch (error) {
+                    console.error(error)
+                }    
+
+            } else {
+                try {
+                    const newUser = await signInAnonymously(auth);
+                    const newToken = await newUser.user.getIdToken()
+                    // add new user to database
+                    console.log(newUser.user.uid)
                     try {
-                        await signInAnonymously(auth);
-                    } catch (err: unknown) {
-                        console.error("Error signing in anonymously:", err);
-                        if (err instanceof Error) {
-                            setError(err.message);
-                        } else {
-                            setError(String(err));
+                        const res = await fetch("https://addprofile-auu3gfb5pa-uc.a.run.app", {
+                            method: "POST",
+                            headers: { Authorization: `Bearer ${newToken}` },
+                        });
+                      
+                        if (!res.ok) {
+                            throw new Error(`Failed to POST: ${res.statusText}`);
                         }
+                        const data = await res.json();
+                        setRole(data.role)  
+                    } catch (error) {
+                        console.error(error)
+                    }    
+                } catch (err: unknown) {
+                    if (err instanceof Error) {
+                        setError(err.message);
+                    } else {
+                        setError(String(err));
                     }
                 }
-            });
-
-            return () => unsubscribeAuthState();
-        })
-        .catch((persistenceError) => {
-            console.error("Error setting persistence:", persistenceError);
-            setError((persistenceError as Error).message || String(persistenceError));
+            }
         });
+
+        return () => unsubscribeAuthState()
     }, []);
+
+    useEffect(() => {
+        const minutes=5;
+        const interval=minutes * 60 * 10000;
+        // console.log("authcontext")
+        
+        const handle = setInterval(async () => {
+            const user = auth.currentUser;
+            if (user) {
+                try {
+                    const newToken = await user.getIdToken(true);
+                    sessionStorage.setItem("myIdToken", newToken)
+                    // console.log(user);
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+        }, interval);
+        return () => clearInterval(handle);
+    }, [])
 
     const contextValue: SessionContextValue = {
         userId,
+        role,
         loading,
         error,
     };
