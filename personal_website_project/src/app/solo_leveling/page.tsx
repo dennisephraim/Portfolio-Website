@@ -12,7 +12,7 @@ const temp_task = [
 ]
 
 export default function SoloLeveling() {
-    const {userId, role, loading, error} = useSession()
+    const {role, loading, error} = useSession()
     if (loading) return <p>Loading Session</p>
     if (error) return <p>Error: {error}</p>
 
