@@ -1,4 +1,3 @@
-// src/context/SessionContext.tsx
 "use client"
 
 import React, {
@@ -8,7 +7,7 @@ import React, {
     useContext,
     ReactNode,
 } from "react";
-import { signInAnonymously, onIdTokenChanged } from "firebase/auth";
+import { signInAnonymously, onIdTokenChanged, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/config"
 
 type SessionContextValue = {
@@ -37,7 +36,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
 
     useEffect(() => {
         // console.log("onfirstLogin")
-        const unsubscribeAuthState = onIdTokenChanged(auth, async (user) => {
+        const unsubscribeAuthState = onAuthStateChanged(auth, async (user) => {
             if (user) {
                 const token = await user.getIdToken(true);
                 sessionStorage.setItem("myIdToken", token);
@@ -95,7 +94,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
     }, []);
 
     useEffect(() => {
-        const minutes=5;
+        const minutes=4;
         const interval=minutes * 60 * 10000;
         // console.log("authcontext")
         
