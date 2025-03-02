@@ -8,8 +8,8 @@ import { useSession } from "@/context/context";
 export default function Blog() {
     const [ blogs, setBlogs ] = useState<Array<{header: string, content: string, date: string, time: string}>>([])
     const [ isPopupOpen, setIsPopupOpen ] = useState(false);
-    const [ postHeader, setPostHeader ] = useState<String>("");
-    const [ postContent, setPostContent] = useState<String>("");
+    const [ postHeader, setPostHeader ] = useState<string>("");
+    const [ postContent, setPostContent] = useState<string>("");
     const {role} = useSession()
 
     useEffect(() => {
@@ -40,7 +40,7 @@ export default function Blog() {
         setIsPopupOpen(() => !isPopupOpen);
     }
 
-    const handleInputChange = (type: String, value: String) => {
+    const handleInputChange = (type: string, value: string) => {
         if (type == "header") {
             setPostHeader(value);
         } else {
@@ -70,6 +70,7 @@ export default function Blog() {
             }
 
         } catch (error) {
+            console.error(error)
             console.log("Unable to post at this time, Please try again later")
         }
         setIsPopupOpen(() => !isPopupOpen)

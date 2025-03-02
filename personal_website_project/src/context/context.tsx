@@ -7,7 +7,7 @@ import React, {
     useContext,
     ReactNode,
 } from "react";
-import { signInAnonymously, onIdTokenChanged, onAuthStateChanged } from "firebase/auth";
+import { signInAnonymously, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/config"
 
 type SessionContextValue = {
