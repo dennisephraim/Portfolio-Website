@@ -6,7 +6,7 @@ import { useSession } from "@/context/context";
 
 
 export default function Blog() {
-    const [ blogs, setBlogs ] = useState<Array<{header: string, content: string, date: string, time: string}>>([])
+    const [ blogs, setBlogs ] = useState<Array<{header: string, content: string, timestamp: string,}>>([])
     const [ isPopupOpen, setIsPopupOpen ] = useState(false);
     const [ postHeader, setPostHeader ] = useState<string>("");
     const [ postContent, setPostContent] = useState<string>("");
@@ -50,6 +50,9 @@ export default function Blog() {
 
     const handleAddPost = async () => {
         try {
+            if (postHeader == "" || postContent == "") {
+                throw new Error("input values before posting");
+            }
             const newDate = new Date()
             const token = sessionStorage.getItem("myIdToken")
             const res = await fetch("https://addblog-auu3gfb5pa-uc.a.run.app", {
@@ -61,7 +64,7 @@ export default function Blog() {
                 body: JSON.stringify({
                     header: postHeader,
                     content: postContent,
-                    time: newDate,
+                    timestamp: newDate,
                 })
             });
             
@@ -72,49 +75,62 @@ export default function Blog() {
         } catch (error) {
             console.error(error)
             console.log("Unable to post at this time, Please try again later")
-        }
-        setIsPopupOpen(() => !isPopupOpen)
-        setPostContent("")
-        setPostHeader("")
+        } finally {
+            setIsPopupOpen(() => !isPopupOpen)
+            setPostContent("")
+            setPostHeader("")
+        }        
     }
 
-    if (blogs.length > 0) {
-        return (
-            <div>
-                <h1>Welcome to my Personal Blog!</h1>
-                {blogs.map((blog, index) => (
-                    <Blogrow key={index} header={blog.header} content={blog.content} date={blog.date} time={blog.time}/>
-                ))}
+    
+    return (
+        <div>
+            <div className="flex flex-row justify-between items-center mb-2">
+                <h1><span className="text-blue-400 text-2xl">Welcome</span> to my <span className="text-blue-400 text-2xl">Personal Blog!</span></h1>   
                 {role === "admin" && 
-                    <button className="bg-blue-950 p-1 rounded-md" onClick={handleButtonClick}>
-                        Add Post
+                    <button
+                    className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-950 p-2 rounded-md text-white"
+                    onClick={handleButtonClick}
+                    >
+                        Create New Post
                     </button>
+                  
                 }
-
-                {isPopupOpen && (
-                    <div>
-                        <div className="mb-6">
-                            <label className="block mb-2 text-sm font-medium text-blue-900">Subject</label>
-                            <input
-                                type="text"
-                                className=" text-blue-900" 
-                                onChange={(event) => handleInputChange("header", event.target.value)}/>
-                        </div>
-                        <div className="mb-6">
-                            <label className="block mb-2 text-sm font-medium text-blue-900">Content</label>
-                            <input
-                                type="text" 
-                                className="block w-full p-4 text-blue-900" 
-                                onChange={(event) => handleInputChange("content", event.target.value)}/>
-                        </div>
-                        <button onClick={handleAddPost}>Post</button>
-                    </div>
-                )}
             </div>
-        )
-    } else {
-        return <h1>loading</h1>
-    }
+            <div>
+                {blogs.length > 0 && 
+                    blogs.map((blog, index) => (
+                        <Blogrow key={index} header={blog.header} content={blog.content} timestamp={blog.timestamp} />
+                    ))
+                }
+            </div>
+
+            {isPopupOpen && (
+                <div>
+                    <div className="mb-6">
+                        <label className="block mb-2 text-sm font-medium text-blue-900">Subject</label>
+                        <input
+                            type="text"
+                            className=" text-blue-900" 
+                            onChange={(event) => handleInputChange("header", event.target.value)}/>
+                    </div>
+                    <div className="mb-6">
+                        <label className="block mb-2 text-sm font-medium text-blue-900">Content</label>
+                        <input
+                            type="text" 
+                            className="block w-full p-4 text-blue-900" 
+                            onChange={(event) => handleInputChange("content", event.target.value)}/>
+                    </div>
+                    <button 
+                    onClick={handleAddPost} 
+                    className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-950 p-2 rounded-md text-white"
+                    >
+                        Post
+                    </button>
+                </div>
+            )}
+        </div>
+    )
     
     
 }

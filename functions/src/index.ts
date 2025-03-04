@@ -69,7 +69,7 @@ export const getBlogs = onRequest(async (req, res) => {
       await admin.auth().verifyIdToken(idToken);
 
       const blogsRef = db.collection("blogs");
-      const snapshot = await blogsRef.get();
+      const snapshot = await blogsRef.orderBy("timestamp", "desc").get();
 
       const blogs = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -97,13 +97,12 @@ export const addBlog = onRequest(async (req, res) => {
 
         const header = req.body.header;
         const content = req.body.content;
-        const time = req.body.time;
+        const timestamp = req.body.timestamp;
 
-        const result = await db.collection("blogs").doc(time).set({
+        const result = await db.collection("blogs").doc(timestamp).set({
           header: header,
           content: content,
-          date: time,
-          time: time,
+          timestamp: timestamp,
         });
 
         return res.status(200).json({result: result});

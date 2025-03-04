@@ -14,7 +14,7 @@ export default function Navbar() {
       <div className="w-full border border-gray-600 border-l-0 border-r-0 border-t-0 mb-10 p-5 md:py-8 ">
         <div className="sticky justify-between w-[85%] lg:w-[70%] mx-auto flex items-center">
             <Link href="/">
-                NETTEN
+                HOME
             </Link>
             <div className="hidden md:flex">
                 <ul className="flex gap-x-6 text-gray-400">
