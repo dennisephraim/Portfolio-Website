@@ -122,8 +122,8 @@ export default function Blog() {
                             onChange={(event) => handleInputChange("content", event.target.value)}/>
                     </div>
                     <button 
-                    onClick={handleAddPost} 
-                    className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-950 p-2 rounded-md text-white"
+                        onClick={handleAddPost} 
+                        className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-950 p-2 rounded-md text-white"
                     >
                         Post
                     </button>
