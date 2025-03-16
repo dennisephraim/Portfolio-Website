@@ -2,7 +2,6 @@
 
 import { Input, Button, Avatar, Typography } from "@material-tailwind/react";
 import { useState } from "react";
-import Message from "./Message";
 
 export default function ChatArea() {
     const [ message, setMessage ] = useState("");
