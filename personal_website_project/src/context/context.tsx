@@ -73,7 +73,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
                         });
                       
                         if (!res.ok) {
-                            throw new Error(`Failed to POST: ${res.statusText}`);
+                            throw new Error(`Failed to add new user: ${res.statusText}`);
                         }
                         const data = await res.json();
                         setRole(data.role)  
