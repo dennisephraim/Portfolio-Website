@@ -1,7 +1,8 @@
 "use client"
 
-import { Input, Button, Avatar, Typography } from "@material-tailwind/react";
 import { useState } from "react";
+import { Avatar, Typography, Button, TextField } from "@mui/material";
+import SendIcon from '@mui/icons-material/Send';
 
 export default function ChatArea() {
     const [ message, setMessage ] = useState("");
@@ -16,27 +17,26 @@ export default function ChatArea() {
                 <Avatar src="https://docs.material-tailwind.com/img/face-2.jpg" alt="avatar"/>
             </div>
             <div className="pr-4 pl-4 items-center text-gray-700 flex justify-center">
-                <Typography variant="small" color="gray" className="font-normal">
+                <Typography variant="body2" color="gray" className="font-normal">
                     Start a converstion below!
                 </Typography>
             </div>
             <div className="relative flex pr-4 pl-4 pt-4">
-                <Input
+                <TextField
                     type="text"
                     label="Message"
-                    color="blue"
+                    size="small"
                     value={message}
                     onChange={handleMessageChange}
-                    className="pr-20 text-white"
-                    containerProps={{
-                        className: "min-w-0",
-                    }}
+                    className="pr-20 rounded-md"
+                    fullWidth
                 />
                 <Button
-                    size="sm"
-                    color={message ? "blue" : "gray"}
-                    disabled={!message}
+                    variant="contained"
+                    size="small"
+                    color="primary"
                     className="!absolute right-5 top-5 rounded"
+                    endIcon={<SendIcon />}
                 >
                     Send
                 </Button>
