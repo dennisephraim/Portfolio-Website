@@ -1,8 +1,9 @@
 "use client"
 
 import { useState } from "react";
-import { Avatar, Typography, Button, TextField } from "@mui/material";
+import { Avatar, Typography, } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
+import Message from "./Message";
 
 export default function ChatArea() {
     const [ message, setMessage ] = useState("");
@@ -20,26 +21,21 @@ export default function ChatArea() {
                 <Typography variant="body2" color="gray" className="font-normal">
                     Start a converstion below!
                 </Typography>
+                <Message message="Hello!" reversed={true}/>
             </div>
             <div className="relative flex pr-4 pl-4 pt-4">
-                <TextField
+                <input
                     type="text"
-                    label="Message"
-                    size="small"
                     value={message}
                     onChange={handleMessageChange}
-                    className="pr-20 rounded-md"
-                    fullWidth
+                    className="rounded-md w-full p-1.5 text-white bg-custom_slate focus:outline-none focus:outline-blue-400"
                 />
-                <Button
-                    variant="contained"
-                    size="small"
-                    color="primary"
-                    className="!absolute right-5 top-5 rounded"
-                    endIcon={<SendIcon />}
+                <button
+                    className="absolute rounded bg-blue-400 text-white p-1 px-2 text-sm right-5 top-5 gap-x-2 flex items-center" 
                 >
                     Send
-                </Button>
+                    <SendIcon fontSize="small" />
+                </button>
             </div>
         </div>
     )
