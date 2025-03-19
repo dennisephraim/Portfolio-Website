@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
   --background: #ffffff;
@@ -13,6 +11,12 @@
     --foreground: #ededed;
   }
 }
+
+@theme {
+ --color-mint-500: rgb(10 30 50);
+}
+
+@plugin 'tailwind-scrollbar' {}
 
 body {
   color: var(--foreground);

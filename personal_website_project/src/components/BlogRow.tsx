@@ -20,7 +20,7 @@ export default function Blogrow({header, content, timestamp}: {header: string, c
   }
   
   return (
-    <div className="flex flex-col bg-custom_blue_shade bg-opacity-80 border-slate-500 first:border-b-2 border-b-2 last:border-b-0 p-3 first:rounded-t-md last:rounded-b-md">
+    <div className="flex flex-col bg-mint-500 bg-opacity-80 border-slate-500 first:border-b-2 border-b-2 last:border-b-0 p-3 first:rounded-t-md last:rounded-b-md">
       <div onClick={handleClick} className="cursor-pointer">
         <div className="flex flex-row justify-between">
           <h1 className="text-lg">{header}</h1>

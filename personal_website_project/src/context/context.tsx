@@ -13,6 +13,8 @@ import { auth } from "../firebase/config"
 type SessionContextValue = {
     userId: string | null;
     role: string | null;
+    name: string | null;
+    title: string | null;
     loading: boolean;
     error: string | null;
 };
@@ -20,6 +22,8 @@ type SessionContextValue = {
 const SessionContext = createContext<SessionContextValue>({
     userId: null,
     role: null,
+    name: null,
+    title: null,
     loading: true,
     error: null,
 });
@@ -31,6 +35,8 @@ interface SessionProviderProps {
 export function SessionProvider({ children }: SessionProviderProps) {
     const [userId, setUser] = useState<string | null>(null);
     const [role, setRole] = useState<string | null>(null);
+    const [name, setName] = useState<string | null>(null);
+    const [title, setTitle] = useState<string | null>(null);    
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -55,7 +61,10 @@ export function SessionProvider({ children }: SessionProviderProps) {
                     }
                   
                     const data = await res.json();
+                    
                     setRole(data.role)  
+                    setName(data.name)
+                    setTitle(data.title)
                 } catch (error) {
                     console.error(error)
                 }    
@@ -77,6 +86,8 @@ export function SessionProvider({ children }: SessionProviderProps) {
                         }
                         const data = await res.json();
                         setRole(data.role)  
+                        setName(data.name)
+                        setTitle(data.title)
                     } catch (error) {
                         console.error(error)
                     }    
@@ -116,6 +127,8 @@ export function SessionProvider({ children }: SessionProviderProps) {
     const contextValue: SessionContextValue = {
         userId,
         role,
+        name,
+        title,
         loading,
         error,
     };
