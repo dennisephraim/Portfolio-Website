@@ -1,19 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "../components/navbar"
 import Navbar from "@/components/navbar";
 import { SessionProvider } from "@/context/context";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Ephraim Akai-Nettey - Personal Website",
@@ -29,7 +19,7 @@ export default function RootLayout({
     <SessionProvider>
         <html lang="en">
           <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+            className={`antialiased`}
           >
             <Navbar/>
             <div className="lg:w-[60%] w-[75%] md:w-[70%] mx-auto">
