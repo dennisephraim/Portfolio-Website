@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import "../components/navbar"
 import Navbar from "@/components/navbar";
 import { SessionProvider } from "@/context/context";
