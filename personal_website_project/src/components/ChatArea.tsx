@@ -6,7 +6,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Message from "./Message";
 import { useSession } from "@/context/context";
 
-export default function ChatArea({person}: {person: {name: string, title: string, ID: string}}) {
+export default function ChatArea({person, adminUserID}: {person: {name: string, title: string, ID: string}, adminUserID: string | undefined}) {
     const {userId} = useSession();
 
     const [ message, setMessage ] = useState({message: "", senderId: userId, receiverId: person.ID});
@@ -19,7 +19,32 @@ export default function ChatArea({person}: {person: {name: string, title: string
         setMessage({message: e.target.value, senderId: userId, receiverId: person.ID});
     }
 
-    const handleSendMessage = () => {
+    const handleSendMessage = async () => {
+        try {
+            const token = sessionStorage.getItem("myIdToken");
+            const timestamp = new Date()
+            const isAdminUserSender = userId === adminUserID;
+            
+            const res = await fetch("https://addmessage-auu3gfb5pa-uc.a.run.app", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    message: message.message,
+                    senderId: message.senderId,
+                    receiverId: message.receiverId,
+                    timestamp: timestamp,
+                    isAdminUserSender: isAdminUserSender,
+                }),
+            })
+            if (!res.ok) {
+                throw new Error(`Failed to send message: ${res.statusText}`);
+            }
+        } catch (error) {
+            console.error(error);
+        }
         setMessages(prevMessages => [...prevMessages, message]);
         setMessage({message: "", senderId: "", receiverId: ""});
     }

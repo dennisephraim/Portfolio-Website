@@ -69,9 +69,8 @@ export default function Blog() {
             });
             
             if (!res.ok) {
-                throw new Error(`Failed to fetch: ${res.statusText}`);
+                throw new Error(`Failed to add blog: ${res.statusText}`);
             }
-
         } catch (error) {
             console.error(error)
             console.log("Unable to post at this time, Please try again later")

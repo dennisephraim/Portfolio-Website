@@ -32,7 +32,6 @@ export default function ChatRoom() {
     
                 if (admin) {
                     setAdminUser(admin);
-                    console.log(admin)
                 } else {
                     console.warn("Admin user not found");
                     setAdminUser(undefined);
@@ -62,7 +61,7 @@ export default function ChatRoom() {
                     )
                 )}
             </div>            
-            <ChatArea person={person} />    
+            <ChatArea person={person} adminUserID={adminUser?.id} />    
         </div>
     )
 }
