@@ -16,32 +16,33 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
         setMessage({message: e.target.value, senderId: userId, receiverId: person.ID, timestamp: ""});
     }
 
+    const getCurrentMessages = async () => {
+        try {
+            const token = sessionStorage.getItem("myIdToken");
+            const res = await fetch("https://getusersmessages-auu3gfb5pa-uc.a.run.app", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    senderId: userId,
+                    receiverId: person.ID,
+                    isAdminUserSender: role === "admin",
+                }),
+            })
+            if (!res.ok) {
+                throw new Error(`Failed to fetch: ${res.statusText}`);
+            }
+            const data = await res.json();
+            setMessages(data)
+
+        } catch (error) {
+            console.error(error)
+        }    
+    }
+
     useEffect(() => {
-        const getCurrentMessages = async () => {
-            try {
-                const token = sessionStorage.getItem("myIdToken");
-                const res = await fetch("https://getusersmessages-auu3gfb5pa-uc.a.run.app", {
-                    method: "POST",
-                    headers: { 
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        senderId: userId,
-                        receiverId: person.ID,
-                        isAdminUserSender: role === "admin",
-                    }),
-                })
-                if (!res.ok) {
-                    throw new Error(`Failed to fetch: ${res.statusText}`);
-                }
-                const data = await res.json();
-                setMessages(data)
-    
-            } catch (error) {
-                console.error(error)
-            }    
-        }
         getCurrentMessages()
     }, [person]);
 
@@ -71,8 +72,8 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
         } catch (error) {
             console.error(error);
         }
-        setMessage({message: "", senderId: "", receiverId: "", timestamp: ""});  
-        setMessages((prevMessages) => [...prevMessages, message]);      
+        setMessage({message: "", senderId: "", receiverId: "", timestamp: ""}); 
+        getCurrentMessages()
     }
     
     return (
