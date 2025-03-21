@@ -8,12 +8,20 @@ import { useSession } from "@/context/context";
 import { collection, query, onSnapshot, orderBy } from "firebase/firestore"
 import { db } from "@/firebase/config";
 
+interface Message {
+    id: string;
+    message: string;
+    senderId: string;
+    receiverId: string;
+    timestamp: string;
+  }
+
 export default function ChatArea({person, adminUserID }: {person: {name: string, title: string, ID: string, profile_picture: string}, adminUserID: string | undefined}) {
     const {userId, profile_picture} = useSession();
     const messagesID = adminUserID === userId ? `${person.ID}-${userId}` : `${userId}-${person.ID}`
 
     const [ message, setMessage ] = useState({message: "", senderId: userId, receiverId: person.ID, timestamp: ""});
-    const [ messages, setMessages ] = useState<any>([]);
+    const [ messages, setMessages ] = useState<Message[]>([]);
 
     const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage({message: e.target.value, senderId: userId, receiverId: person.ID, timestamp: ""});
@@ -27,11 +35,11 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
         const q = query(messagesRef, orderBy("timestamp", "asc"));
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
-          const updatedMessages = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-          setMessages(updatedMessages);
+            const updatedMessages = snapshot.docs.map((doc) => {
+                const data = doc.data() as Omit<Message, "id">;
+                return {id: doc.id, ...data};
+            });
+            setMessages(updatedMessages);
         });
     
         return () => unsubscribe();
@@ -86,7 +94,7 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
                         </p>}
                     </div>
                     <div className="flex flex-col">
-                        {messages.map((message: { receiverId: string, senderId: string | null; message: string; }, index: Key | null | undefined) => (
+                        {messages.map((message, index) => (
                             message.senderId === userId ?
                             (<Message key={index} reversed={true} message={message.message} profile_picture={profile_picture!}/>) :
                             (<Message key={index} message={message.message} profile_picture={person.profile_picture}/>)
