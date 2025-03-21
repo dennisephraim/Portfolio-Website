@@ -8,8 +8,8 @@ import { useSession } from "@/context/context";
 export default function ChatRoom() {
     const [ person, setPerson ] = useState({ name: "", title: "", ID: "" });
     const [ profiles, setProfiles ] = useState<{name: string, title: string, id: string, role:string}[]>([]);
-    const [ adminUser, setAdminUser ] = useState<{name: string, title: string, id: string, role:string} | undefined>({name: "", title: "", id: "", role: ""});
-
+    const [ adminUser, setAdminUser ] = useState<{name: string, title: string, id: string, role:string} | null>({name: "", title: "", id: "", role: ""});
+   
     const { role } = useSession();
 
     useEffect(() => {
@@ -34,7 +34,7 @@ export default function ChatRoom() {
                     setAdminUser(admin);
                 } else {
                     console.warn("Admin user not found");
-                    setAdminUser(undefined);
+                    setAdminUser(null);
                 }
 
             } catch (error) {
@@ -44,8 +44,8 @@ export default function ChatRoom() {
         fetchProfiles();
     }, []);
 
-    const handleChangePerson = ({name, title, ID}: {name: string, title: string, ID: string}) => {
-        setPerson({name, title, ID});
+    const handleChangePerson = async ({name, title, ID}: {name: string, title: string, ID: string}) => {
+        setPerson({name, title, ID});    
     }
 
     return (
