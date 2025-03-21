@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, Key } from "react";
+import { useState, useEffect } from "react";
 import { Avatar } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import Message from "./Message";
