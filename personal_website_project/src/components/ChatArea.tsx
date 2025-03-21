@@ -7,7 +7,7 @@ import Message from "./Message";
 import { useSession } from "@/context/context";
 
 export default function ChatArea({person, adminUserID }: {person: {name: string, title: string, ID: string, profile_picture: string}, adminUserID: string | undefined}) {
-    const {userId, role} = useSession();
+    const {userId, role, profile_picture} = useSession();
 
     const [ message, setMessage ] = useState({message: "", senderId: userId, receiverId: person.ID, timestamp: ""});
     const [ messages, setMessages ] = useState<{message: string, senderId: string | null, receiverId: string, timestamp: string}[]>([]);
@@ -96,7 +96,9 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
                     </div>
                     <div className="flex flex-col">
                         {messages.map((message, index) => (
-                            <Message key={index} message={message.message} profile_picture={person.profile_picture}/>
+                            message.senderId === userId ?
+                            (<Message key={index} reversed={true} message={message.message} profile_picture={profile_picture!}/>) :
+                            (<Message key={index} message={message.message} profile_picture={person.profile_picture}/>)
                         ))}  
                     </div>
                 </div>

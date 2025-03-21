@@ -11,6 +11,7 @@ export default function ChatRoom() {
     const [ adminUser, setAdminUser ] = useState<{name: string, title: string, id: string, role:string, profile_picture: string} | null>({name: "", title: "", id: "", role: "", profile_picture:""});
    
     const { role } = useSession();
+    console.log(profiles)
 
     useEffect(() => {
         const fetchProfiles = async () => {

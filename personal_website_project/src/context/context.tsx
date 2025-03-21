@@ -14,6 +14,7 @@ type SessionContextValue = {
     userId: string | null;
     role: string | null;
     name: string | null;
+    profile_picture: string | null;
     title: string | null;
     loading: boolean;
     error: string | null;
@@ -23,6 +24,7 @@ const SessionContext = createContext<SessionContextValue>({
     userId: null,
     role: null,
     name: null,
+    profile_picture: null,
     title: null,
     loading: true,
     error: null,
@@ -36,6 +38,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
     const [userId, setUser] = useState<string | null>(null);
     const [role, setRole] = useState<string | null>(null);
     const [name, setName] = useState<string | null>(null);
+    const [profile_picture, setProfilePicture] = useState<string | null>(null);
     const [title, setTitle] = useState<string | null>(null);    
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -64,6 +67,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
                     
                     setRole(data.role)  
                     setName(data.name)
+                    setProfilePicture(data.profile_picture)
                     setTitle(data.title)
                 } catch (error) {
                     console.error(error)
@@ -87,6 +91,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
                         const data = await res.json();
                         setRole(data.role)  
                         setName(data.name)
+                        setProfilePicture(data.profile_picture)
                         setTitle(data.title)
                     } catch (error) {
                         console.error(error)
@@ -128,6 +133,7 @@ export function SessionProvider({ children }: SessionProviderProps) {
         userId,
         role,
         name,
+        profile_picture,
         title,
         loading,
         error,
