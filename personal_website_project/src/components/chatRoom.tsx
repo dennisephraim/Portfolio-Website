@@ -6,9 +6,9 @@ import { useState, useEffect } from "react";
 import { useSession } from "@/context/context";
 
 export default function ChatRoom() {
-    const [ person, setPerson ] = useState({ name: "", title: "", ID: "" });
-    const [ profiles, setProfiles ] = useState<{name: string, title: string, id: string, role:string}[]>([]);
-    const [ adminUser, setAdminUser ] = useState<{name: string, title: string, id: string, role:string} | null>({name: "", title: "", id: "", role: ""});
+    const [ person, setPerson ] = useState({ name: "", title: "", ID: "", profile_picture: ""});
+    const [ profiles, setProfiles ] = useState<{name: string, title: string, id: string, role:string, profile_picture: string}[]>([]);
+    const [ adminUser, setAdminUser ] = useState<{name: string, title: string, id: string, role:string, profile_picture: string} | null>({name: "", title: "", id: "", role: "", profile_picture:""});
    
     const { role } = useSession();
 
@@ -44,8 +44,8 @@ export default function ChatRoom() {
         fetchProfiles();
     }, []);
 
-    const handleChangePerson = async ({name, title, ID}: {name: string, title: string, ID: string}) => {
-        setPerson({name, title, ID});    
+    const handleChangePerson = async ({name, title, ID, profile_picture}: {name: string, title: string, ID: string, profile_picture: string}) => {
+        setPerson({name, title, ID, profile_picture});    
     }
 
     return (
@@ -54,10 +54,10 @@ export default function ChatRoom() {
                 {(profiles.length > 1) && 
                     (role === "admin" ?  
                         (profiles.map((profile, index) => (
-                            <ChatProfile key={index} changePerson={handleChangePerson} name={profile.name} title={profile.title} ID={profile.id} />
+                            <ChatProfile key={index} changePerson={handleChangePerson} name={profile.name} title={profile.title} ID={profile.id} profile_picture={profile.profile_picture} />
                     ))) : 
                         (
-                            <ChatProfile changePerson={handleChangePerson} name={adminUser?.name || ""} title={adminUser?.title || ""} ID={adminUser?.id || ""} />
+                            <ChatProfile changePerson={handleChangePerson} name={adminUser?.name || ""} title={adminUser?.title || ""} ID={adminUser?.id || ""} profile_picture={adminUser?.profile_picture || ""} />
                     )
                 )}
             </div>            

@@ -23,6 +23,7 @@ export const addProfile = onRequest(async (req, res) => {
           role: "user",
           name: "Anonymous",
           title: "Anonymous",
+          profile_picture: "none",
           id: userId,
         });
 

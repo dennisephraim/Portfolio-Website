@@ -6,12 +6,12 @@ import SendIcon from '@mui/icons-material/Send';
 import Message from "./Message";
 import { useSession } from "@/context/context";
 
-export default function ChatArea({person, adminUserID }: {person: {name: string, title: string, ID: string}, adminUserID: string | undefined}) {
+export default function ChatArea({person, adminUserID }: {person: {name: string, title: string, ID: string, profile_picture: string}, adminUserID: string | undefined}) {
     const {userId, role} = useSession();
 
     const [ message, setMessage ] = useState({message: "", senderId: userId, receiverId: person.ID, timestamp: ""});
     const [ messages, setMessages ] = useState<{message: string, senderId: string | null, receiverId: string, timestamp: string}[]>([]);
-    
+
     const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage({message: e.target.value, senderId: userId, receiverId: person.ID, timestamp: ""});
     }
@@ -43,7 +43,7 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
             }    
         }
         getCurrentMessages()
-    }, [person, messages]);
+    }, [person]);
 
     const handleSendMessage = async () => {
         try {
@@ -79,13 +79,13 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
         <div>
             {!person.name && 
                 <div className="flex justify-center items-center h-full">
-                    <p>Welcome to the Chat Area, Click on a profile to begin a conversation!</p>
+                    <p className="text-sm text-gray-400">Welcome to the Chat Area, Click on a profile to begin a conversation!</p>
                 </div>
             }
             {person.name && 
             <div className="h-100 grid grid-rows-[auto_1fr_auto]">
                 <div className="border-b-4 border-slate-950 p-3 flex justify-end">
-                    <Avatar src="https://docs.material-tailwind.com/img/face-2.jpg" alt="avatar"/>
+                    <Avatar src={person.profile_picture} alt="avatar"/>
                 </div>
                 <div className="pr-4 pl-4 overflow-auto scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin scroll-smooth">
                     <div className="flex items-center justify-center">
@@ -95,7 +95,7 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
                     </div>
                     <div className="flex flex-col">
                         {messages.map((message, index) => (
-                            <Message key={index} message={message.message} />
+                            <Message key={index} message={message.message} profile_picture={person.profile_picture}/>
                         ))}  
                     </div>
                 </div>
