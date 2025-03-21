@@ -16,7 +16,7 @@
     "@tailwindcss/oxide": "^4.0.14",
     "cookie-parser": "^1.4.7",
     "express": "^4.21.2",
-    "firebase": "^11.3.1",
+    "firebase": "^11.5.0",
     "hamburger-react": "^2.5.2",
     "next": "15.1.7",
     "postcss-loader": "^8.1.1",
