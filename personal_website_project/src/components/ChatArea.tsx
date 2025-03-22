@@ -133,7 +133,7 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
                         placeholder="Type a message..."
                     />
                     <button
-                        className={`absolute rounded bg-blue-400 text-white p-1 px-2 text-sm right-4 top-1 gap-x-2 flex items-center ${!message && "opacity-70"}`}
+                        className={`absolute rounded bg-blue-400 text-white p-1 px-2 text-sm right-4 top-1 gap-x-2 flex items-center hover:cursor-pointer ${!message && "opacity-70"}`}
                         disabled={!message}
                         onClick={handleSendMessage}
                     >

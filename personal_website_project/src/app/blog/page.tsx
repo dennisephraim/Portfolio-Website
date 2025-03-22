@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Blogrow from "@/components/BlogRow"
 import { useSession } from "@/context/context";
+import { TextareaAutosize } from "@mui/material";
 
 
 export default function Blog() {
@@ -88,7 +89,7 @@ export default function Blog() {
                 <h1><span className="text-blue-400 text-2xl">Welcome</span> to my <span className="text-blue-400 text-2xl">Personal Blog!</span></h1>   
                 {role === "admin" && 
                     <button
-                    className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-950 p-2 rounded-md text-white"
+                    className="bg-gradient-to-r from-blue-500 via-blue-400 to-blue-950 p-2 rounded-md text-white hover:cursor-pointer"
                     onClick={handleButtonClick}
                     >
                         Create New Post
@@ -107,22 +108,25 @@ export default function Blog() {
             {isPopupOpen && (
                 <div>
                     <div className="mb-6">
-                        <label className="block mb-2 text-sm font-medium text-blue-900">Subject</label>
+                        <label className="block mb-2 text-xl text-blue-400">Subject</label>
                         <input
                             type="text"
-                            className=" text-blue-900" 
+                            className="text-white w-full bg-mint-500 rounded-lg p-2" 
                             onChange={(event) => handleInputChange("header", event.target.value)}/>
                     </div>
                     <div className="mb-6">
-                        <label className="block mb-2 text-sm font-medium text-blue-900">Content</label>
-                        <input
-                            type="text" 
-                            className="block w-full p-4 text-blue-900" 
-                            onChange={(event) => handleInputChange("content", event.target.value)}/>
+                        <label className="block mb-2 text-xl font-medium text-blue-400">Content</label>
+                        <textarea 
+                            name="content" 
+                            rows={6}
+                            className="block w-full p-2 text-white bg-mint-500 rounded-lg"
+                            onChange={(event) => handleInputChange("content", event.target.value)}
+                        >
+                        </textarea>
                     </div>
                     <button 
                         onClick={handleAddPost} 
-                        className="bg-gradient-to-r from-blue-500 via-blue-700 to-blue-950 p-2 rounded-md text-white"
+                        className="bg-gradient-to-r from-blue-500 via-blue-400 to-blue-950 p-2 rounded-md text-white hover:cursor-pointer"
                     >
                         Post
                     </button>
@@ -130,6 +134,4 @@ export default function Blog() {
             )}
         </div>
     )
-    
-    
 }

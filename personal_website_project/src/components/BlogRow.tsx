@@ -20,7 +20,7 @@ export default function Blogrow({header, content, timestamp}: {header: string, c
   }
   
   return (
-    <div className="flex flex-col bg-mint-500 bg-opacity-80 border-slate-500 first:border-b-2 border-b-2 last:border-b-0 p-3 first:rounded-t-md last:rounded-b-md">
+    <div className="flex flex-col bg-mint-500 border-slate-500 first:border-b-2 border-b-2 last:border-b-0 p-3 first:rounded-t-md last:rounded-b-md">
       <div onClick={handleClick} className="cursor-pointer">
         <div className="flex flex-row justify-between">
           <h1 className="text-lg">{header}</h1>
@@ -32,17 +32,17 @@ export default function Blogrow({header, content, timestamp}: {header: string, c
       </div>
       
       {isOpen && 
-        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-black p-6 rounded-lg shadow-lg w-11/12 max-w-lg">
+        <div className="fixed inset-0 bg-slate-950 flex items-center justify-center">
+          <div className="bg-mint-500 opacity-[100%] p-6 h-full shadow-lg w-[60%] max-w-[100%]">
             <div className="flex justify-end">
               <button
                 onClick={handleClick}
-                className="text-gray-600 hover:text-white text-2xl"
+                className="text-gray-400 hover:text-white text-2xl"
               >
                 &times;
               </button>
             </div>
-            <div className="overflow-y-auto max-h-80">
+            <div className="overflow-y-auto max-h-full text-white">
               <h1 className="text-lg text-center pb-2">{header}</h1>
               <p>{content}</p>
             </div>
