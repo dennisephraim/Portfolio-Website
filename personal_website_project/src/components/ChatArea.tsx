@@ -17,7 +17,7 @@ interface Message {
   }
 
 export default function ChatArea({person, adminUserID }: {person: {name: string, title: string, ID: string, profile_picture: string}, adminUserID: string | undefined}) {
-    const {userId, profile_picture} = useSession();
+    const {userId, profile_picture, name, title} = useSession();
     const messagesID = adminUserID === userId ? `${person.ID}-${userId}` : `${userId}-${person.ID}`
 
     const [ message, setMessage ] = useState({message: "", senderId: userId, receiverId: person.ID, timestamp: ""});
@@ -101,7 +101,7 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
             {person.name && 
             <div className="h-100 grid grid-rows-[auto_1fr_auto]">
                 <div className="border-b-4 border-slate-950 p-3 flex justify-end">
-                    <ChatProfile reversed={true} title={person.title} name={person.name} ID={person.ID} profile_picture={person.profile_picture}/>
+                    <ChatProfile title={title || ""} name={name || ""} ID={userId || ""} profile_picture={profile_picture || ""}/>
                 </div>
                 <div className="pr-4 pl-4 overflow-auto scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin scroll-smooth">
                     <div className="flex items-center justify-center">
