@@ -7,6 +7,7 @@ import Message from "./Message";
 import { useSession } from "@/context/context";
 import { collection, query, onSnapshot, orderBy } from "firebase/firestore"
 import { db } from "@/firebase/config";
+import { green } from "@mui/material/colors";
 
 interface Message {
     id: string;
@@ -31,7 +32,6 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
         if (!(userId && person.ID && adminUserID)) return;
     
         const messagesRef = collection(db, "conversations", messagesID, "messages")
-
         const q = query(messagesRef, orderBy("timestamp", "asc"));
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -43,11 +43,22 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
         });
     
         return () => unsubscribe();
-                
     }, [ messagesID ])
 
     const handleSendMessage = async () => {
         try {
+            if (!(person.ID && userId && message.message)) {
+                alert("Please type a message")
+                return
+            }
+
+            if (!message.message.trim()) {
+                setMessage(
+                    (prev) => ({...prev, message: ""})
+                )
+                return;
+            }
+            
             const token = sessionStorage.getItem("myIdToken");
             const timestamp = new Date()
             const isAdminUserSender = userId === adminUserID;
@@ -85,7 +96,7 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
             {person.name && 
             <div className="h-100 grid grid-rows-[auto_1fr_auto]">
                 <div className="border-b-4 border-slate-950 p-3 flex justify-end">
-                    <Avatar src={person.profile_picture} alt="avatar"/>
+                    <Avatar src={person.profile_picture} alt="avatar" sx={{bgcolor: green[400]}}/>
                 </div>
                 <div className="pr-4 pl-4 overflow-auto scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin scroll-smooth">
                     <div className="flex items-center justify-center">
@@ -106,6 +117,11 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
                         type="text"
                         value={message.message}
                         onChange={handleMessageChange}
+                        onKeyDown={(e) => {
+                            if (e.key == "Enter") {
+                                handleSendMessage()
+                            }
+                        }}
                         className="rounded-md w-full p-2 placeholder-gray-400 text-white bg-slate-950 focus:outline-none text-sm focus:ring-2 focus:ring-blue-400"
                         placeholder="Type a message..."
                     />

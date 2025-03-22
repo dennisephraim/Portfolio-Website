@@ -1,4 +1,5 @@
 import { Avatar, Typography } from "@mui/material"
+import { green } from "@mui/material/colors"
 
 export default function ChatProfile({name, title, ID, profile_picture, changePerson}: {name: string, title: string, ID: string, profile_picture: string, changePerson: ({name, title, ID, profile_picture}: {name: string, title: string, ID: string, profile_picture: string}) => void}) {
     return (
@@ -6,7 +7,7 @@ export default function ChatProfile({name, title, ID, profile_picture, changePer
             className="flex items-center gap-4 cursor-pointer"
             onClick={() => changePerson({name, title, ID, profile_picture})}
         >
-            <Avatar src={profile_picture} alt="avatar"/>
+            <Avatar src={profile_picture} alt="Avatar" sx={{ bgcolor: green[400] }}/>
             <div>
                 <Typography variant="body1">{name}</Typography>
                 <p className="text-sm text-gray-400">
