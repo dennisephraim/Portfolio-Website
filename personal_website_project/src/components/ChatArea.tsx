@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Avatar } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import Message from "./Message";
@@ -23,6 +23,8 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
 
     const [ message, setMessage ] = useState({message: "", senderId: userId, receiverId: person.ID, timestamp: ""});
     const [ messages, setMessages ] = useState<Message[]>([]);
+    
+    const bottomRef = useRef<HTMLDivElement>(null);
 
     const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage({message: e.target.value, senderId: userId, receiverId: person.ID, timestamp: ""});
@@ -44,6 +46,10 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
     
         return () => unsubscribe();
     }, [ messagesID ])
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
 
     const handleSendMessage = async () => {
         try {
@@ -111,6 +117,7 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
                             (<Message key={index} message={message.message} profile_picture={person.profile_picture}/>)
                         ))}  
                     </div>
+                    <div ref={bottomRef}/>
                 </div>
                 <div className="relative flex p-3 pt-0">
                     <input
