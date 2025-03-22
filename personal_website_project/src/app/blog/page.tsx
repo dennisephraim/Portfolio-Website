@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react"
 import Blogrow from "@/components/BlogRow"
 import { useSession } from "@/context/context";
-import { TextareaAutosize } from "@mui/material";
-
 
 export default function Blog() {
     const [ blogs, setBlogs ] = useState<Array<{header: string, content: string, timestamp: string,}>>([])
