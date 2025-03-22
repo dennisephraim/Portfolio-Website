@@ -96,7 +96,7 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
             {person.name && 
             <div className="h-100 grid grid-rows-[auto_1fr_auto]">
                 <div className="border-b-4 border-slate-950 p-3 flex justify-end">
-                    <Avatar src={person.profile_picture} alt="avatar" sx={{bgcolor: green[400]}}/>
+                    <Avatar src={person.profile_picture} alt="Avatar" sx={{bgcolor: green[400]}}/>
                 </div>
                 <div className="pr-4 pl-4 overflow-auto scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin scroll-smooth">
                     <div className="flex items-center justify-center">
