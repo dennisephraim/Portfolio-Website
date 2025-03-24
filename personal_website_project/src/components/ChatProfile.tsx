@@ -7,7 +7,7 @@ export default function ChatProfile({name, title, ID, profile_picture, reversed,
             className="flex items-center gap-4 cursor-pointer"
             onClick={() => changePerson && changePerson({name, title, ID, profile_picture})}
         >
-            {!reversed && <Avatar src={profile_picture} alt="Avatar" sx={{ bgcolor: green[400] }}/>}
+            {!reversed && <Avatar src={profile_picture} sx={{ bgcolor: green[400] }}/>}
             <div>
                 <Typography variant="body1">{name}</Typography>
                 <p className="text-sm text-gray-400">

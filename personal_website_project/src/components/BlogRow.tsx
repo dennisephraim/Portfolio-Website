@@ -42,9 +42,9 @@ export default function Blogrow({header, content, timestamp}: {header: string, c
                 &times;
               </button>
             </div>
-            <div className="overflow-y-auto max-h-full text-white">
+            <div className="overflow-y-auto max-h-full text-white pb-4 scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin scroll-smooth">
               <h1 className="text-lg text-center pb-2">{header}</h1>
-              <p>{content}</p>
+              <p style={{whiteSpace: "pre-wrap"}}>{content}</p>
             </div>
           </div>
         </div>

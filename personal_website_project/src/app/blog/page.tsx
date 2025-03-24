@@ -11,6 +11,8 @@ export default function Blog() {
     const [ postContent, setPostContent] = useState<string>("");
     const {role} = useSession()
 
+    console.log(postContent)
+
     useEffect(() => {
         const fetchBlogs = async () => {
             try {
@@ -115,7 +117,7 @@ export default function Blog() {
                     <div className="mb-6">
                         <label className="block mb-2 text-xl font-medium text-blue-400">Content</label>
                         <textarea 
-                            name="content" 
+                            name="content"
                             rows={6}
                             className="block w-full p-2 text-white bg-mint-500 rounded-lg"
                             onChange={(event) => handleInputChange("content", event.target.value)}
