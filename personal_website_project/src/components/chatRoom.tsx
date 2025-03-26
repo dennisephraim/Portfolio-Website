@@ -50,14 +50,14 @@ export default function ChatRoom() {
 
     return (
         <div className="bg-mint-500 bg-opacity-80 rounded-lg grid grid-cols-[auto_1fr] h-100vh">
-            <div className="scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin border-r-4 p-4 border-r-slate-950 flex flex-col gap-y-4 overflow-auto h-100 scroll-smooth">
+            <div className="scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin border-r-4 p-2 border-r-slate-950 flex flex-col gap-y-4 overflow-auto h-100 scroll-smooth">
                 {(profiles.length > 1) && 
                     (role === "admin" ?  
                         (profiles.map((profile, index) => (
-                            <ChatProfile key={index} changePerson={handleChangePerson} name={profile.name} title={profile.title} ID={profile.id} profile_picture={profile.profile_picture} />
+                            <ChatProfile selected={profile.id === person.ID} key={index} changePerson={handleChangePerson} name={profile.name} title={profile.title} ID={profile.id} profile_picture={profile.profile_picture} />
                     ))) : 
                         (
-                            <ChatProfile changePerson={handleChangePerson} name={adminUser?.name || ""} title={adminUser?.title || ""} ID={adminUser?.id || ""} profile_picture={adminUser?.profile_picture || ""} />
+                            <ChatProfile selected={adminUser?.id === person.ID} changePerson={handleChangePerson} name={adminUser?.name || ""} title={adminUser?.title || ""} ID={adminUser?.id || ""} profile_picture={adminUser?.profile_picture || ""} />
                     )
                 )}
             </div>            
