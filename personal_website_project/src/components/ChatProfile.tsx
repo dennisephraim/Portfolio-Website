@@ -8,9 +8,9 @@ export default function ChatProfile({name, title, ID, profile_picture, selected,
     return (
         <div 
             className={`transition-colors flex items-center gap-4 cursor-pointer px-2 py-1 hover:bg-gray-700 rounded-md ${selected ? "bg-gray-600" : ""}`}
-            onClick={() => {
+            onClick={() => 
                 changePerson && changePerson({name, title, ID, profile_picture})
-            }}
+            }
         >
             {!reversed && <Avatar src={profile_picture} sx={{ bgcolor: green[400] }}/>}
             <div>
