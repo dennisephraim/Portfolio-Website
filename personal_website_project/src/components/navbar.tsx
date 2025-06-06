@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 import Hamburger from 'hamburger-react'
+import NLogo from "@/assets/netten type 2 light.svg"
 
 export default function Navbar() {
     const pathname = usePathname()
@@ -11,13 +12,13 @@ export default function Navbar() {
     const [ isOpen, setOpen ] = useState(false)
 
     return (
-      <div className="w-full border border-gray-600 border-l-0 border-r-0 border-t-0 mb-10 p-5 md:py-8 ">
-        <div className="sticky justify-between w-[85%] lg:w-[70%] mx-auto flex items-center">
-            <Link href="/">
-                HOME
+      <div className="w-full sticky top-0 start-0 border backdrop-blur-md border-gray-600 border-l-0 border-r-0 border-t-0 mb-10 p-3 md:py-6 ">
+        <div className="justify-between w-[85%] lg:w-[70%] mx-auto flex items-center">
+            <Link href="/" >
+                <NLogo className="w-32 h-10 text-blue-400" />
             </Link>
             <div className="hidden md:flex">
-                <ul className="flex gap-x-6 text-gray-400">
+                <ul className="flex gap-x-6 text-gray-400 font-semibold">
                     <li>
                         <Link href="/about" className={`transition-all ${isActive('/about') ? 'text-blue-400' : 'hover:text-white'}`}>
                             About Me

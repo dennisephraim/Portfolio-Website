@@ -4,9 +4,12 @@ import { useState, useEffect, useRef } from "react";
 import SendIcon from '@mui/icons-material/Send';
 import Message from "./Message";
 import { useSession } from "@/context/context";
-import { collection, query, onSnapshot, orderBy } from "firebase/firestore"
+import { collection, query, onSnapshot, orderBy, doc, updateDoc } from "firebase/firestore"
 import { db } from "@/firebase/config";
 import ChatProfile from "./ChatProfile";
+import { Avatar, Button, TextField } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
+import { green } from "@mui/material/colors"
 
 interface Message {
     id: string;
@@ -16,18 +19,39 @@ interface Message {
     timestamp: string;
   }
 
-export default function ChatArea({person, adminUserID }: {person: {name: string, title: string, ID: string, profile_picture: string}, adminUserID: string | undefined}) {
+export default function ChatArea({changePerson, person, adminUserID }: {changePerson?: ({name, title, ID, profile_picture}: {name: string, title: string, ID: string, profile_picture: string}) => void, person: {name: string, title: string, ID: string, profile_picture: string}, adminUserID: string | undefined}) {
     const {userId, profile_picture, name, title} = useSession();
     const messagesID = adminUserID === userId ? `${person.ID}-${userId}` : `${userId}-${person.ID}`
 
     const [ message, setMessage ] = useState({message: "", senderId: userId, receiverId: person.ID, timestamp: ""});
     const [ messages, setMessages ] = useState<Message[]>([]);
-    
-    const bottomRef = useRef<HTMLDivElement>(null);
 
+    const [cname, setName] = useState("")
+    const [ctitle, setTitle] = useState("")
+
+    async function handleSave() {
+        try {
+            if (!userId) return
+
+            const userRef = doc(db, 'users', userId)
+            await updateDoc(userRef, {
+                name:  cname.trim()  || 'Anonymous',
+                title: ctitle.trim() || 'Anonymous',
+            })
+        } catch (err) {
+            console.error('Failed to update profile:', err)
+        }
+    }
+
+    const bottomRef = useRef<HTMLDivElement>(null);
     const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage({message: e.target.value, senderId: userId, receiverId: person.ID, timestamp: ""});
     }
+
+    useEffect(() => {
+        setName(name  ?? '')
+        setTitle(title ?? '')
+    }, [name, title])
 
     useEffect(() => {
         if (!(userId && person.ID && adminUserID)) return;
@@ -90,18 +114,71 @@ export default function ChatArea({person, adminUserID }: {person: {name: string,
         }
         setMessage({message: "", senderId: "", receiverId: "", timestamp: ""});
     }
+    const avatarSrc = profile_picture && profile_picture !== "none" ? profile_picture : undefined;
     
     return (
         <div>
             {!person.name && 
-                <div className="flex justify-center items-center h-full">
-                    <p className="text-sm text-gray-400">Welcome to the Chat Area, Click on a profile to begin a conversation!</p>
-                </div>
-            }
+                <div className="flex flex-col items-center gap-6 h-full p-8 text-white">
+                    <h1 className="text-md">Edit Profile</h1>
+                    <Avatar
+                        src={avatarSrc}
+                        alt="Avatar"
+                        sx={{ width: 96, height: 96, bgcolor: green[400] }}
+                    />
+                    <div className="flex flex-col w-full max-w-sm gap-4 ">
+                        <TextField
+                            label="Name"
+                            variant="outlined"
+                            size="small"
+                            fullWidth
+                            value={cname}
+                            onChange={e => setName(e.target.value)}
+                            slotProps={{
+                                inputLabel: {
+                                    sx: { color: '#FFFFFF' },
+                                },
+                                input: {
+                                    sx: {
+                                        color: '#ffffff',
+                                    },
+                                },
+                            }}
+                        />
+                        <TextField
+                            label="Title"
+                            variant="outlined"
+                            size="small"
+                            fullWidth
+                            value={ctitle}
+                            onChange={e => setTitle(e.target.value)}
+                            slotProps={{
+                                inputLabel: {
+                                    sx: { color: '#FFFFFF' },
+                                },
+                                input: {
+                                    sx: {
+                                        color: '#fff',
+                                    },
+                                },
+                            }}
+                        />
+                        <Button variant="contained" onClick={handleSave}>
+                            Save
+                        </Button>
+                    </div>
+                </div>}
             {person.name && 
             <div className="h-100 grid grid-rows-[auto_1fr_auto]">
-                <div className="border-b-4 border-slate-950 p-3 flex justify-end">
-                    <ChatProfile title={title || ""} name={name || ""} ID={userId || ""} profile_picture={profile_picture || ""}/>
+                <div className="border-b-4 border-slate-950 p-3 flex justify-between items-center">
+                    <ChatProfile title={person.title} name={person.name} ID={person.ID} profile_picture={person.profile_picture}/>
+                    <Tooltip title="Click to view or edit your profile" className="cursor-pointer" arrow 
+                        onClick={() => {
+                            changePerson && changePerson({name: "", title: "", ID: "", profile_picture:""})
+                        }}>
+                        {/* <ChatProfile title={title || ""} name={name || ""} ID={userId || ""} profile_picture={profile_picture || ""}/> */}
+                        <Avatar src={avatarSrc} alt="Avatar" sx={{ bgcolor: green[400] }} />
+                    </Tooltip>              
                 </div>
                 <div className="pr-4 pl-4 overflow-auto scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin scroll-smooth">
                     <div className="flex items-center justify-center">
