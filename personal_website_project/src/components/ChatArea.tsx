@@ -173,9 +173,9 @@ export default function ChatArea({changePerson, person, adminUserID }: {changePe
                 <div className="border-b-4 border-slate-950 p-3 flex justify-between items-center">
                     <ChatProfile title={person.title} name={person.name} ID={person.ID} profile_picture={person.profile_picture}/>
                     <Tooltip title="Click to view or edit your profile" className="cursor-pointer" arrow 
-                        onClick={() => {
+                        onClick={() => 
                             changePerson && changePerson({name: "", title: "", ID: "", profile_picture:""})
-                        }}>
+                        }>
                         {/* <ChatProfile title={title || ""} name={name || ""} ID={userId || ""} profile_picture={profile_picture || ""}/> */}
                         <Avatar src={avatarSrc} alt="Avatar" sx={{ bgcolor: green[400] }} />
                     </Tooltip>              
