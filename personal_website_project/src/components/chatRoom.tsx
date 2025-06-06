@@ -9,14 +9,15 @@ export default function ChatRoom() {
     const [ person, setPerson ] = useState({ name: "", title: "", ID: "", profile_picture: ""});
     const [ profiles, setProfiles ] = useState<{name: string, title: string, id: string, role:string, profile_picture: string}[]>([]);
     const [ adminUser, setAdminUser ] = useState<{name: string, title: string, id: string, role:string, profile_picture: string} | null>({name: "", title: "", id: "", role: "", profile_picture:""});
-    const [ loading, setLoading ] = useState<boolean>();
+    // const [ loading, setLoading ] = useState<boolean>();
    
     const { role } = useSession();
+
 
     useEffect(() => {
         const fetchProfiles = async () => {
             try {
-                setLoading(true);
+                // setLoading(true);
                 const token = sessionStorage.getItem("myIdToken");
                 const res = await fetch("https://getallprofiles-auu3gfb5pa-uc.a.run.app", {
                     method: "GET",
@@ -41,9 +42,7 @@ export default function ChatRoom() {
 
             } catch (error) {
                 console.error(error);
-            } finally {
-                setLoading(false);
-            }
+            } 
         };
         fetchProfiles();
     }, []);
