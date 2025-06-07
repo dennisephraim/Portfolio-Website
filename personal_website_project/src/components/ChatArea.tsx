@@ -39,7 +39,7 @@ export default function ChatArea({showEdit, showWelcome, changePerson, person, a
                 name:  cname.trim()  || 'Anonymous',
                 title: ctitle.trim() || 'Anonymous',
             })
-            changePerson && changePerson({name: "", title: "", ID: "", profile_picture:"", edit: false, welcome: true})
+            return changePerson && changePerson({name: "", title: "", ID: "", profile_picture:"", edit: false, welcome: true})
         } catch (err) {
             console.error('Failed to update profile:', err)
         }
@@ -177,8 +177,8 @@ export default function ChatArea({showEdit, showWelcome, changePerson, person, a
                 <div className="border-b-4 border-slate-950 p-3 flex justify-between items-center">
                     <ChatProfile title={person.title} name={person.name} ID={person.ID} profile_picture={person.profile_picture}/>
                     <Tooltip title="Click to view or edit your profile" className="cursor-pointer" arrow 
-                        onClick={() => {
-                            changePerson && changePerson({name: "", title: "", ID: "", profile_picture:"", edit: true, welcome: false})}
+                        onClick={() => 
+                            changePerson && changePerson({name: "", title: "", ID: "", profile_picture:"", edit: true, welcome: false})
                         }>
                         {/* <ChatProfile title={title || ""} name={name || ""} ID={userId || ""} profile_picture={profile_picture || ""}/> */}
                         <Avatar src={avatarSrc} alt="Avatar" sx={{ bgcolor: green[400] }} />
