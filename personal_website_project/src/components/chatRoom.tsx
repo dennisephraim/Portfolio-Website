@@ -10,10 +10,11 @@ export default function ChatRoom() {
     const [ profiles, setProfiles ] = useState<{name: string, title: string, id: string, role:string, profile_picture: string}[]>([]);
     const [ adminUser, setAdminUser ] = useState<{name: string, title: string, id: string, role:string, profile_picture: string} | null>({name: "", title: "", id: "", role: "", profile_picture:""});
     // const [ loading, setLoading ] = useState<boolean>();
+    
+    const [ showWelcome, setShowWelcome ] = useState(true);
+    const [ showEdit, setShowEdit ] = useState(false);
    
     const { role } = useSession();
-
-
     useEffect(() => {
         const fetchProfiles = async () => {
             try {
@@ -47,23 +48,23 @@ export default function ChatRoom() {
         fetchProfiles();
     }, []);
 
-    const handleChangePerson = async ({name, title, ID, profile_picture}: {name: string, title: string, ID: string, profile_picture: string}) => {
-        setPerson({name, title, ID, profile_picture});    
+    const handleChangePerson = async ({name, title, ID, profile_picture, edit, welcome}: {name: string, title: string, ID: string, profile_picture: string, edit: boolean, welcome: boolean}) => {
+        setPerson({name, title, ID, profile_picture});  
+        setShowWelcome(welcome);  
+        setShowEdit(edit)
     }
 
     return (
         <div className="bg-mint-500 bg-opacity-80 rounded-lg grid grid-cols-[auto_1fr] h-100vh">
-            <div className="scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin border-r-4 p-2 border-r-slate-950 flex flex-col gap-y-4 overflow-auto h-100 scroll-smooth">
-                
+            <div className="scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin border-r-4 p-2 border-r-slate-950 flex flex-col gap-y-4 overflow-auto h-100 w-70 scroll-smooth">
                     {role === "admin" ?  
                         (profiles.map((profile, index) => (
                             <ChatProfile selected={profile.id === person.ID} key={index} changePerson={handleChangePerson} name={profile.name} title={profile.title} ID={profile.id} profile_picture={profile.profile_picture} />
-                    ))) : 
-                        
+                    ))) :
                             <ChatProfile selected={adminUser?.id === person.ID} changePerson={handleChangePerson} name={adminUser?.name || ""} title={adminUser?.title || ""} ID={adminUser?.id || ""} profile_picture={adminUser?.profile_picture || ""} />
                         }
             </div>            
-            <ChatArea changePerson={handleChangePerson} person={person} adminUserID={adminUser?.id} />    
+            <ChatArea showEdit={showEdit} showWelcome={showWelcome} changePerson={handleChangePerson} person={person} adminUserID={adminUser?.id} />    
         </div>
     )
 }

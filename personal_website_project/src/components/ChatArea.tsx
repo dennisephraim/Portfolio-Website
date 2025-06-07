@@ -19,7 +19,7 @@ interface Message {
     timestamp: string;
   }
 
-export default function ChatArea({changePerson, person, adminUserID }: {changePerson?: ({name, title, ID, profile_picture}: {name: string, title: string, ID: string, profile_picture: string}) => void, person: {name: string, title: string, ID: string, profile_picture: string}, adminUserID: string | undefined}) {
+export default function ChatArea({showEdit, showWelcome, changePerson, person, adminUserID }: {showEdit: boolean, showWelcome: boolean, changePerson?: ({name, title, ID, profile_picture, edit, welcome}: {name: string, title: string, ID: string, profile_picture: string, edit: boolean, welcome: boolean}) => void, person: {name: string, title: string, ID: string, profile_picture: string}, adminUserID: string | undefined}) {
     const {userId, profile_picture, name, title} = useSession();
     const messagesID = adminUserID === userId ? `${person.ID}-${userId}` : `${userId}-${person.ID}`
 
@@ -28,22 +28,23 @@ export default function ChatArea({changePerson, person, adminUserID }: {changePe
 
     const [cname, setName] = useState("")
     const [ctitle, setTitle] = useState("")
+    const bottomRef = useRef<HTMLDivElement>(null);
+    
 
     async function handleSave() {
         try {
             if (!userId) return
-
             const userRef = doc(db, 'users', userId)
             await updateDoc(userRef, {
                 name:  cname.trim()  || 'Anonymous',
                 title: ctitle.trim() || 'Anonymous',
             })
+            changePerson && changePerson({name: "", title: "", ID: "", profile_picture:"", edit: false, welcome: true})
         } catch (err) {
             console.error('Failed to update profile:', err)
         }
     }
 
-    const bottomRef = useRef<HTMLDivElement>(null);
     const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage({message: e.target.value, senderId: userId, receiverId: person.ID, timestamp: ""});
     }
@@ -118,7 +119,10 @@ export default function ChatArea({changePerson, person, adminUserID }: {changePe
     
     return (
         <div>
-            {!person.name && 
+            {showWelcome && 
+                <div className="flex justify-center items-center h-full">Welcome to the Chat Area</div>
+            }
+            {showEdit && 
                 <div className="flex flex-col items-center gap-6 h-full p-8 text-white">
                     <h1 className="text-md">Edit Profile</h1>
                     <Avatar
@@ -173,19 +177,19 @@ export default function ChatArea({changePerson, person, adminUserID }: {changePe
                 <div className="border-b-4 border-slate-950 p-3 flex justify-between items-center">
                     <ChatProfile title={person.title} name={person.name} ID={person.ID} profile_picture={person.profile_picture}/>
                     <Tooltip title="Click to view or edit your profile" className="cursor-pointer" arrow 
-                        onClick={() => 
-                            changePerson && changePerson({name: "", title: "", ID: "", profile_picture:""})
+                        onClick={() => {
+                            changePerson && changePerson({name: "", title: "", ID: "", profile_picture:"", edit: true, welcome: false})}
                         }>
                         {/* <ChatProfile title={title || ""} name={name || ""} ID={userId || ""} profile_picture={profile_picture || ""}/> */}
                         <Avatar src={avatarSrc} alt="Avatar" sx={{ bgcolor: green[400] }} />
                     </Tooltip>              
                 </div>
                 <div className="pr-4 pl-4 overflow-auto scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin scroll-smooth">
-                    <div className="flex items-center justify-center">
-                        {messages.length === 0 && <p className="text-sm text-gray-400">
+                    {messages.length === 0 && <div className="flex h-full items-center justify-center">
+                        <p className="text-sm text-gray-400">
                             Start a converstion with {person.name.split(" ")[0]} below!
-                        </p>}
-                    </div>
+                        </p>
+                    </div>}
                     <div className="flex flex-col">
                         {messages.map((message, index) => (
                             message.senderId === userId ?
@@ -219,6 +223,6 @@ export default function ChatArea({changePerson, person, adminUserID }: {changePe
                 </div>
             </div>
             }
-            </div>
+        </div>
     )
 }

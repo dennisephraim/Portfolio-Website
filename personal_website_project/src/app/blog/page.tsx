@@ -5,10 +5,11 @@ import Blogrow from "@/components/BlogRow"
 import { useSession } from "@/context/context";
 
 export default function Blog() {
-    const [ blogs, setBlogs ] = useState<Array<{header: string, content: string, timestamp: string,}>>([])
+    const [ blogs, setBlogs ] = useState<Array<{header: string, content: string, timestamp: string, tags: string[]}>>([])
     const [ isPopupOpen, setIsPopupOpen ] = useState(false);
     const [ postHeader, setPostHeader ] = useState<string>("");
     const [ postContent, setPostContent] = useState<string>("");
+    const [ postTags, setPostTags ] = useState<string[]>([]);
     const {role} = useSession()
 
     console.log(postContent)
@@ -65,6 +66,7 @@ export default function Blog() {
                 body: JSON.stringify({
                     header: postHeader,
                     content: postContent,
+                    tags: postTags,
                     timestamp: newDate,
                 })
             });
@@ -79,6 +81,7 @@ export default function Blog() {
             setIsPopupOpen(() => !isPopupOpen)
             setPostContent("")
             setPostHeader("")
+            setPostTags([])
         }        
     }
 
@@ -97,10 +100,10 @@ export default function Blog() {
                   
                 }
             </div>
-            <div>
+            <div className="flex flex-col p-5 gap-y-2 h-[70vh] overflow-y-auto scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin scroll-smooth">
                 {blogs.length > 0 && 
                     blogs.map((blog, index) => (
-                        <Blogrow key={index} header={blog.header} content={blog.content} timestamp={blog.timestamp} />
+                        <Blogrow key={index} header={blog.header} content={blog.content} timestamp={blog.timestamp} tags={blog.tags}/>
                     ))
                 }
             </div>

@@ -2,50 +2,67 @@
 
 import { useState } from "react"
 
-export default function Blogrow({header, content, timestamp}: {header: string, content: string, timestamp: string}) {
+const tagsColorMap: Record<string, string> = {
+  "update": "bg-emerald-400",
+  "plan": "bg-fuchsia-400",
+  "progress": "bg-yellow-400",
+  "class": "bg-red-400",
+}
+
+export default function Blogrow({header, content, timestamp, tags}: {header: string, content: string, timestamp: string, tags: string[]}) {
   const [ isOpen, setIsOpen ] = useState<boolean>(false)
 
   const date = new Date(timestamp)
-  const time = date.toLocaleString("en-US", { hour: "numeric", minute: "2-digit", hour12: false, })
-  const day = new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  }).format(date);  
+  const day = date.toLocaleDateString('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+  });
 
-  const firstline: string = content.split('.')[0]
-  // console.log(firstline)
-  const handleClick = () => {
-    setIsOpen(() => !isOpen)
-  }
+  // const time = date.toLocaleString("en-US", { hour: "numeric", minute: "2-digit", hour12: false, })
+
   
   return (
-    <div className="flex flex-col bg-mint-500 border-slate-500 first:border-b-2 border-b-2 last:border-b-0 p-3 first:rounded-t-md last:rounded-b-md">
-      <div onClick={handleClick} className="cursor-pointer">
+    <div className="flex flex-col bg-mint-500 p-2 rounded-md">
+      <div 
+        onClick={() => setIsOpen(true)} 
+        className="cursor-pointer text-sm"
+      >
+        <h1 className="text-base">{header}</h1>
+        <p className="text-gray-400 flex-1 truncate">{content}</p>
         <div className="flex flex-row justify-between">
-          <h1 className="text-lg">{header}</h1>
-          <h2>{day} | {time}</h2>
-        </div>
-        <div>
-            <p>{firstline}...</p>
-        </div>
+          <div className="flex flex-row gap-x-1">
+            {tags.map((tag, index) => (
+              <span key={index} className={`items-center text-xs ${tagsColorMap[tag]} text-white px-1 rounded-md`}>
+                {tag}
+              </span>
+            ))}
+          </div>
+          <h2>{day}</h2>
+        </div>        
       </div>
       
       {isOpen && 
-        <div className="fixed inset-0 bg-slate-950 flex items-center justify-center">
-          <div className="bg-mint-500 opacity-[100%] p-6 h-full shadow-lg w-[60%] max-w-[100%]">
-            <div className="flex justify-end">
+        <div 
+          className="fixed inset-0 flex backdrop-blur-lg items-center justify-center"
+          onClick={() => setIsOpen(false)}
+        >
+          <div 
+            className="bg-mint-500 p-6 h-[80%] overflow-y-auto text-white scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin scroll-smooth rounded-2xl shadow-lg w-[60%] max-w-[100%]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center">
+              <h1 className="text-lg text-center">{header}</h1>
               <button
-                onClick={handleClick}
+                onClick={() => setIsOpen(false)}
                 className="text-gray-400 hover:text-white text-2xl"
               >
                 &times;
               </button>
             </div>
-            <div className="overflow-y-auto max-h-full text-white pb-4 scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin scroll-smooth">
-              <h1 className="text-lg text-center pb-2">{header}</h1>
-              <p style={{whiteSpace: "pre-wrap"}}>{content}</p>
-            </div>
+            
+            <p style={{whiteSpace: "pre-wrap"}}>{content}</p>
+            
           </div>
         </div>
       }
