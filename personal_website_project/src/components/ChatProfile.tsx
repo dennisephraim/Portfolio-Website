@@ -7,7 +7,7 @@ export default function ChatProfile({name, title, ID, profile_picture, selected,
     const avatarSrc = profile_picture && profile_picture !== "none" ? profile_picture : undefined;
     return (
         <div 
-            className={`transition-colors flex items-center gap-4 cursor-pointer px-2 py-1 hover:bg-gray-700 rounded-md ${selected ? "bg-gray-600" : ""}`}
+            className={`transition-colors flex items-center gap-4 cursor-pointer px-2 py-1 hover:bg-gray-500 rounded-md ${selected ? "bg-gray-600" : ""}`}
             onClick={() => 
                 changePerson && changePerson({name, title, ID, profile_picture, edit: false, welcome: false})
             }

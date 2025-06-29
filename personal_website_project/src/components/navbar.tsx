@@ -4,15 +4,28 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 import Hamburger from 'hamburger-react'
-import NLogo from "@/assets/netten type 2 light.svg"
+import NLogo from "@/assets/netten_logo.svg"
+import CLogo from "@/assets/netten_logo2.svg"
+import DLogo from "@/assets/netten_logo1.svg"
+import gsap from "gsap"
+import { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
+import DrawSVGPlugin from "gsap/DrawSVGPlugin"
+
+gsap.registerPlugin(DrawSVGPlugin, useGSAP); 
 
 export default function Navbar() {
     const pathname = usePathname()
     const isActive = (href: string) => href === pathname
     const [ isOpen, setOpen ] = useState(false)
+    const container = useRef<HTMLDivElement>(null);
+
+    useGSAP(() => {
+	    gsap.from('.netten_logo_svg__fn, .netten_logo_svg__sn, .netten_logo_svg__fe, .netten_logo_svg__se, .netten_logo_svg__ft, .netten_logo_svg__st', {duration:1.5, drawSVG: "0 ", stagger: 0.2, ease: "power1.inOut"})
+    },{ scope: container });
 
     return (
-      <div className="w-full sticky top-0 start-0 border backdrop-blur-md border-gray-600 border-l-0 border-r-0 border-t-0 mb-10 p-3 md:py-6 ">
+      <div ref={container} className="w-full sticky top-0 start-0 backdrop-blur-md mb-10 p-3 md:py-6 ">
         <div className="justify-between w-[85%] lg:w-[70%] mx-auto flex items-center">
             <Link href="/" >
                 <NLogo className="w-32 h-10 text-blue-400" />
