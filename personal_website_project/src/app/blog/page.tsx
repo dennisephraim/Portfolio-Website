@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Blogrow from "@/components/BlogRow"
 import { useSession } from "@/context/context";
+import PageTransition from "@/components/PageTransition";
 
 export default function Blog() {
     const [ blogs, setBlogs ] = useState<Array<{header: string, content: string, timestamp: string, tags: string[]}>>([])
@@ -87,54 +88,56 @@ export default function Blog() {
 
     
     return (
-        <div>
-            <div className="flex flex-row justify-between items-center mb-2">
-                <h1><span className="text-blue-400 text-2xl">Welcome</span> to my <span className="text-blue-400 text-2xl">Personal Blog!</span></h1>   
-                {role === "admin" && 
-                    <button
-                    className="bg-gradient-to-r from-blue-500 via-blue-400 to-blue-950 p-2 rounded-md text-white hover:cursor-pointer"
-                    onClick={handleButtonClick}
-                    >
-                        Create New Post
-                    </button>
-                  
-                }
-            </div>
-            <div className="flex flex-col p-5 gap-y-2 h-[70vh] overflow-y-auto scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin scroll-smooth">
-                {blogs.length > 0 && 
-                    blogs.map((blog, index) => (
-                        <Blogrow key={index} header={blog.header} content={blog.content} timestamp={blog.timestamp} tags={blog.tags}/>
-                    ))
-                }
-            </div>
-
-            {isPopupOpen && (
-                <div>
-                    <div className="mb-6">
-                        <label className="block mb-2 text-xl text-blue-400">Subject</label>
-                        <input
-                            type="text"
-                            className="text-white w-full bg-mint-500 rounded-lg p-2" 
-                            onChange={(event) => handleInputChange("header", event.target.value)}/>
-                    </div>
-                    <div className="mb-6">
-                        <label className="block mb-2 text-xl font-medium text-blue-400">Content</label>
-                        <textarea 
-                            name="content"
-                            rows={6}
-                            className="block w-full p-2 text-white bg-mint-500 rounded-lg"
-                            onChange={(event) => handleInputChange("content", event.target.value)}
-                        >
-                        </textarea>
-                    </div>
-                    <button 
-                        onClick={handleAddPost} 
+        <PageTransition>
+            <div>
+                <div className="flex flex-row justify-between items-center mb-2">
+                    <h1><span className="text-blue-400 text-2xl">Welcome</span> to my <span className="text-blue-400 text-2xl">Personal Blog!</span></h1>   
+                    {role === "admin" && 
+                        <button
                         className="bg-gradient-to-r from-blue-500 via-blue-400 to-blue-950 p-2 rounded-md text-white hover:cursor-pointer"
-                    >
-                        Post
-                    </button>
+                        onClick={handleButtonClick}
+                        >
+                            Create New Post
+                        </button>
+                    
+                    }
                 </div>
-            )}
-        </div>
+                <div className="flex flex-col p-5 gap-y-2 h-[70vh] overflow-y-auto scrollbar-thumb-blue-400 scrollbar-track-slate-950 scrollbar-thin scroll-smooth">
+                    {blogs.length > 0 && 
+                        blogs.map((blog, index) => (
+                            <Blogrow key={index} header={blog.header} content={blog.content} timestamp={blog.timestamp} tags={blog.tags}/>
+                        ))
+                    }
+                </div>
+
+                {isPopupOpen && (
+                    <div>
+                        <div className="mb-6">
+                            <label className="block mb-2 text-xl text-blue-400">Subject</label>
+                            <input
+                                type="text"
+                                className="text-white w-full bg-mint-500 rounded-lg p-2" 
+                                onChange={(event) => handleInputChange("header", event.target.value)}/>
+                        </div>
+                        <div className="mb-6">
+                            <label className="block mb-2 text-xl font-medium text-blue-400">Content</label>
+                            <textarea 
+                                name="content"
+                                rows={6}
+                                className="block w-full p-2 text-white bg-mint-500 rounded-lg"
+                                onChange={(event) => handleInputChange("content", event.target.value)}
+                            >
+                            </textarea>
+                        </div>
+                        <button 
+                            onClick={handleAddPost} 
+                            className="bg-gradient-to-r from-blue-500 via-blue-400 to-blue-950 p-2 rounded-md text-white hover:cursor-pointer"
+                        >
+                            Post
+                        </button>
+                    </div>
+                )}
+            </div>
+        </PageTransition>
     )
 }

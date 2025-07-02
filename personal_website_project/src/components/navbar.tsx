@@ -11,6 +11,7 @@ import gsap from "gsap"
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import DrawSVGPlugin from "gsap/DrawSVGPlugin"
+import AnimatedLink from "./AnimatedLink"
 
 gsap.registerPlugin(DrawSVGPlugin, useGSAP); 
 
@@ -25,37 +26,37 @@ export default function Navbar() {
     },{ scope: container });
 
     return (
-      <div ref={container} className="w-full sticky top-0 start-0 backdrop-blur-md mb-10 p-3 md:py-6 ">
+      <div ref={container} className="w-full z-50 sticky top-0 start-0 backdrop-blur-md mb-10 p-3 md:py-6 ">
         <div className="justify-between w-[85%] lg:w-[70%] mx-auto flex items-center">
-            <Link href="/" >
+            <AnimatedLink href="/" >
                 <NLogo className="w-32 h-10 text-blue-400" />
-            </Link>
+            </AnimatedLink>
             <div className="hidden md:flex">
                 <ul className="flex gap-x-6 text-gray-400 font-semibold">
                     <li>
-                        <Link href="/about" className={`transition-all ${isActive('/about') ? 'text-blue-400' : 'hover:text-white'}`}>
+                        <AnimatedLink href="/about" className={`transition-all ${isActive('/about') ? 'text-blue-400' : 'hover:text-white'}`}>
                             About Me
-                        </Link>
+                        </AnimatedLink>
                     </li>
                     <li>
-                        <Link href="/projects" className={`transition-all ${isActive('/projects') ? 'text-blue-400' : 'hover:text-white'}`}>
+                        <AnimatedLink href="/projects" className={`transition-all ${isActive('/projects') ? 'text-blue-400' : 'hover:text-white'}`}>
                             Projects
-                        </Link>
+                        </AnimatedLink>
                     </li>
                     <li>
-                        <Link href="/blog" className={`transition-all ${isActive('/blog') ? 'text-blue-400' : 'hover:text-white'}`}>
+                        <AnimatedLink href="/blog" className={`transition-all ${isActive('/blog') ? 'text-blue-400' : 'hover:text-white'}`}>
                             Blog
-                        </Link>
+                        </AnimatedLink>
                     </li>
                     <li>
-                        <Link href="/chat" className={`transition-all ${isActive('/chat') ? 'text-blue-400' : 'hover:text-white'}`}>
+                        <AnimatedLink href="/chat" className={`transition-all ${isActive('/chat') ? 'text-blue-400' : 'hover:text-white'}`}>
                             Chat
-                        </Link>
+                        </AnimatedLink>
                     </li>
                     <li>
-                        <Link href="/solo_leveling" className={`transition-all ${isActive('/solo_leveling') ? 'text-blue-400' : 'hover:text-white'}`}>
+                        <AnimatedLink href="/solo_leveling" className={`transition-all ${isActive('/solo_leveling') ? 'text-blue-400' : 'hover:text-white'}`}>
                             Solo Leveling
-                        </Link>
+                        </AnimatedLink>
                     </li>
                 </ul>
             </div>
@@ -67,29 +68,29 @@ export default function Navbar() {
             {isOpen && 
                 <ul className="flex flex-col gap-y-4 text-gray-400">
                     <li>
-                        <Link href="/about" onClick={() => setOpen(false)} className={`transition-all ${isActive('/about') ? 'text-blue-400' : 'hover:text-white'}`}>
+                        <AnimatedLink href="/about" onClick={() => setOpen(false)} className={`transition-all ${isActive('/about') ? 'text-blue-400' : 'hover:text-white'}`}>
                             About Me
-                        </Link>
+                        </AnimatedLink>
                     </li>
                     <li>
-                        <Link href="/projects" onClick={() => setOpen(false)} className={`transition-all ${isActive('/projects') ? 'text-blue-400' : 'hover:text-white'}`}>
+                        <AnimatedLink href="/projects" onClick={() => setOpen(false)} className={`transition-all ${isActive('/projects') ? 'text-blue-400' : 'hover:text-white'}`}>
                             Projects
-                        </Link>
+                        </AnimatedLink>
                     </li>
                     <li>
-                        <Link href="/blog" onClick={() => setOpen(false)} className={`transition-all ${isActive('/blog') ? 'text-blue-400' : 'hover:text-white'}`}>
+                        <AnimatedLink href="/blog" onClick={() => setOpen(false)} className={`transition-all ${isActive('/blog') ? 'text-blue-400' : 'hover:text-white'}`}>
                             Blog
-                        </Link>
+                        </AnimatedLink>
                     </li>
                     <li>
-                        <Link href="/chat" onClick={() => setOpen(false)} className={`transition-all ${isActive('/chat') ? 'text-blue-400' : 'hover:text-white'}`}>
+                        <AnimatedLink href="/chat" onClick={() => setOpen(false)} className={`transition-all ${isActive('/chat') ? 'text-blue-400' : 'hover:text-white'}`}>
                             Chat
-                        </Link>
+                        </AnimatedLink>
                     </li>
                     <li>
-                        <Link href="/solo_leveling" onClick={() => setOpen(false)} className={`transition-all ${isActive('/solo_leveling') ? 'text-blue-400' : 'hover:text-white'}`}>
+                        <AnimatedLink href="/solo_leveling" onClick={() => setOpen(false)} className={`transition-all ${isActive('/solo_leveling') ? 'text-blue-400' : 'hover:text-white'}`}>
                             Solo Leveling
-                        </Link>
+                        </AnimatedLink>
                     </li>
                 </ul>
             }

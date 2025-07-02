@@ -35,7 +35,7 @@ export default function Blogrow({header, content, timestamp, tags}: {header: str
   });
   
   return (
-    <div ref={container} className="flex flex-col bg-mint-500 p-2 rounded-md">
+    <div className="flex flex-col bg-mint-500 p-2 rounded-md">
       <div 
         id="blog-row"
         onClick={onBlogClick} 
@@ -58,7 +58,7 @@ export default function Blogrow({header, content, timestamp, tags}: {header: str
       {isOpen && 
         <div 
           id="blog-modal"
-          className={`fixed inset-0 flex backdrop-blur-lg items-center justify-center`}
+          className={`fixed inset-0 z-60 flex backdrop-blur-lg h-full w-full items-center justify-center`}
           onClick={onBlogClick}
         >
           <div 

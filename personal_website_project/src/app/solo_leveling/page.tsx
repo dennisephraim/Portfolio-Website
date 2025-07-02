@@ -4,6 +4,7 @@ import Goal from "@/components/goal"
 import Status from "@/components/status"
 import AddGoal from "@/components/addGoal"
 import { useSession } from "@/context/context"
+import PageTransition from "@/components/PageTransition"
 
 const temp_task = [
     {name: 'pushups'},
@@ -17,12 +18,11 @@ export default function SoloLeveling() {
     if (error) return <p>Error: {error}</p>
 
     return (
-        <div className="grid grid-cols-2">
-            <Status />
-            <Goal questTitle={"Lock-In"} tasks={temp_task}/>
-            <AddGoal/>
-            <p>Your anonymous UID: {userId}</p>
-            <p>Test</p>
-        </div>
+        <PageTransition>
+            <div className="grid grid-cols-2">
+                Content coming soon!
+                <p>Your anonymous UID: {userId}</p>
+            </div>
+        </PageTransition>
     )
 }

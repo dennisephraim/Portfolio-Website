@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "../components/navbar"
-import Navbar from "@/components/navbar";
 import { SessionProvider } from "@/context/context";
-
+import LayoutContent from "@/components/LayoutContent";
 
 export const metadata: Metadata = {
   title: "Ephraim Akai-Nettey - Personal Website",
@@ -17,16 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <SessionProvider>
-        <html lang="en">
-          <body
-            className={`antialiased`}
-          >
-            <Navbar/>
-            <div className="lg:w-[60%] w-[75%] md:w-[70%] mx-auto">
-              {children}
-            </div>     
-          </body>
-        </html>
+      <html lang="en">
+        <body className={`antialiased`}>
+          <LayoutContent>
+            {children}
+          </LayoutContent>
+        </body>
+      </html>
     </SessionProvider>    
   );
 }
